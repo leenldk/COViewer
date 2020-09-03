@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/main_drawer_item_one"
+        android:title="疫情新闻" />
+    <item android:id="@+id/main_drawer_item_two"
+        android:title="疫情数据" />
+    <item android:id="@+id/main_drawer_item_three"
+        android:title="疫情图谱" />
+    <item android:id="@+id/main_drawer_item_four"
+        android:title="事件聚类" />
+    <item android:id="@+id/main_drawer_item_five"
+        android:title="知疫学者" />
+</menu>
