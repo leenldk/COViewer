@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/main_drawer_item_one"
-        android:title="疫情新闻" />
+        android:title="疫情新闻"
+        android:onClick="main_drawer_button_click"/>
     <item android:id="@+id/main_drawer_item_two"
-        android:title="疫情数据" />
+        android:title="疫情数据"
+        android:onClick="main_drawer_button_click"/>
     <item android:id="@+id/main_drawer_item_three"
-        android:title="疫情图谱" />
+        android:title="疫情图谱"
+        android:onClick="main_drawer_button_click"/>
     <item android:id="@+id/main_drawer_item_four"
-        android:title="事件聚类" />
+        android:title="事件聚类"
+        android:onClick="main_drawer_button_click"/>
     <item android:id="@+id/main_drawer_item_five"
-        android:title="知疫学者" />
+        android:title="知疫学者"
+        android:onClick="main_drawer_button_click"/>
 </menu>

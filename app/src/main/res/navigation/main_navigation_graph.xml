@@ -10,4 +10,9 @@
         android:name="com.example.coviewer.news_main_fragment"
         android:label="fragment_news_main_fragment"
         tools:layout="@layout/news_main_fragment" />
+    <fragment
+        android:id="@+id/data_main_fragment"
+        android:name="com.example.coviewer.data_main_fragment"
+        android:label="fragment_data_main_fragment"
+        tools:layout="@layout/fragment_data_main_fragment" />
 </navigation>
