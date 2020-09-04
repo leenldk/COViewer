@@ -4,6 +4,7 @@ import android.animation.LayoutTransition;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +32,7 @@ public class news_main_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String[] news_class_names = {"新闻", "论文", "事件"};
+    static public String[] news_class_names = {"新闻", "论文", "事件"};
     private boolean[] news_class_visible = {true, true, true};
     public news_main_fragment() {
         // Required empty public constructor
@@ -128,7 +129,11 @@ public class news_main_fragment extends Fragment {
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                System.out.println(tab.getText());
+                if(tab.getText().equals("+")) {
+                    //Navigation.findNavController(getView()).navigate(R.id.to_choosing_news_class);
+                    NewsClassDialog dialog = new NewsClassDialog();
+                    dialog.show(getActivity().getSupportFragmentManager(), "choose_class_dialog");
+                }
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
