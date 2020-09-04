@@ -47,6 +47,8 @@ public class news_main_fragment extends Fragment {
     static private TabLayout.Tab[] news_class_tabs = {null, null};
     static private TabLayout tablayout;
     static private ClassHandler[] news_class_handler = {null, null};
+    private int news_type = 0;
+    private boolean view_history = false;
     public news_main_fragment() {
         // Required empty public constructor
     }
@@ -90,20 +92,6 @@ public class news_main_fragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         String []a = {
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
-                "1!!!!", "sfidojf", "fart", "fuck",
                 "1!!!!", "sfidojf", "fart", "fuck",
                 "1!!!!", "sfidojf", "fart", "fuck",
         };
@@ -157,8 +145,16 @@ public class news_main_fragment extends Fragment {
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getText().equals("全部")) {
+                    news_type = 0;
+                }
                 if(tab.getText().equals("+")) {
-                    //Navigation.findNavController(getView()).navigate(R.id.to_choosing_news_class);
+                    news_type = 1;
+                }
+                if(tab.getText().equals("+")) {
+                    news_type = 2;
+                }
+                if(tab.getText().equals("+")) {
                     NewsClassDialog dialog = new NewsClassDialog();
                     dialog.show(getActivity().getSupportFragmentManager(), "choose_class_dialog");
                 }
@@ -170,13 +166,30 @@ public class news_main_fragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 if(tab.getText().equals("+")) {
-                    //Navigation.findNavController(getView()).navigate(R.id.to_choosing_news_class);
                     NewsClassDialog dialog = new NewsClassDialog();
                     dialog.show(getActivity().getSupportFragmentManager(), "choose_class_dialog");
                 }
             }
         });
+        ((TabLayout)ret_view.findViewById(R.id.history_tab_layout)).addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 0) {
+                    view_history = false;
+                }
+                if(tab.getPosition() == 1) {
+                    view_history = true;
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         return ret_view;
     }
     static public class ClassHandler {

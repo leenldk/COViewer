@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("");
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.browse);// set drawable icon
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
