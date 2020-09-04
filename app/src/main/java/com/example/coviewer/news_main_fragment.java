@@ -1,8 +1,15 @@
 package com.example.coviewer;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.LayoutTransition;
+import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,11 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,8 +42,11 @@ public class news_main_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    static public String[] news_class_names = {"新闻", "论文", "事件"};
-    private boolean[] news_class_visible = {true, true, true};
+    static private String[] news_class_names = {"新闻", "论文"};
+    static private boolean[] news_class_visible = {true, true};
+    static private TabLayout.Tab[] news_class_tabs = {null, null};
+    static private TabLayout tablayout;
+    static private ClassHandler[] news_class_handler = {null, null};
     public news_main_fragment() {
         // Required empty public constructor
     }
@@ -119,13 +132,28 @@ public class news_main_fragment extends Fragment {
             }
         });
 
-        TabLayout tablayout = (TabLayout)ret_view.findViewById(R.id.news_class_tablayout);
-        tablayout.addTab(tablayout.newTab().setCustomView(R.layout.news_class_tab).setText("全部"));
-        for(int i = 0; i < 3; i++) {
-            tablayout.addTab(tablayout.newTab().setCustomView(R.layout.news_class_tab).setText(news_class_names[i]));
+        tablayout = (TabLayout)ret_view.findViewById(R.id.news_class_tablayout);
+        tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        TabLayout.Tab temp_tab = tablayout.newTab().setText("全部");
+        tablayout.addTab(temp_tab);
+        LinearLayout linearLayout = (LinearLayout)temp_tab.view;
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        layoutParams.width = 200;
+        linearLayout.setLayoutParams(layoutParams);
+        for(int i = 0; i < news_class_names.length; i++) {
+            news_class_handler[i] = new ClassHandler(tablayout.newTab().setText(news_class_names[i]));
+            tablayout.addTab(news_class_handler[i].tab);
+            linearLayout = (LinearLayout)news_class_handler[i].tab.view;
+            layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+            layoutParams.width = 200;
+            linearLayout.setLayoutParams(layoutParams);
         }
-        tablayout.addTab(tablayout.newTab().setCustomView(R.layout.news_class_tab).setText("+"));
-
+        temp_tab = tablayout.newTab().setText("+");
+        tablayout.addTab(temp_tab);
+        linearLayout = temp_tab.view;
+        layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        layoutParams.width = 100;
+        linearLayout.setLayoutParams(layoutParams);
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -141,10 +169,140 @@ public class news_main_fragment extends Fragment {
             }
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if(tab.getText().equals("+")) {
+                    //Navigation.findNavController(getView()).navigate(R.id.to_choosing_news_class);
+                    NewsClassDialog dialog = new NewsClassDialog();
+                    dialog.show(getActivity().getSupportFragmentManager(), "choose_class_dialog");
+                }
             }
         });
 
         return ret_view;
     }
+    static public class ClassHandler {
+        TabLayout.Tab tab;
+        static private long animation_time = 250;
+        public ClassHandler(TabLayout.Tab _tab) {
+            tab = _tab;
+        }
+        public void create_animation() {
+            ValueAnimator animation = ValueAnimator.ofInt(0, 200);
+            animation.setDuration(animation_time);
+            animation.start();
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator updatedAnimation) {
+                    // You can use the animated value in a property that uses the
+                    // same type as the animation. In this case, you can use the
+                    // float value in the translationX property.
+                    int animatedValue = (int)updatedAnimation.getAnimatedValue();
+                    LinearLayout linearLayout = (LinearLayout)tab.view;
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+                    layoutParams.width = animatedValue;
+                    linearLayout.setLayoutParams(layoutParams);
+                }
+            });
+        }
+        public void delete_animation() {
+            ValueAnimator animation = ValueAnimator.ofInt(200, 0);
+            animation.setDuration(animation_time);
+            animation.start();
+            animation.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator updatedAnimation) {
+                    // You can use the animated value in a property that uses the
+                    // same type as the animation. In this case, you can use the
+                    // float value in the translationX property.
+                    tablayout.removeTab(tab);
+                }
+                @Override
+                public void onAnimationCancel(Animator updatedAnimation) {
+                    // You can use the animated value in a property that uses the
+                    // same type as the animation. In this case, you can use the
+                    // float value in the translationX property.
+                    tablayout.removeTab(tab);
+                }
+                @Override
+                public void onAnimationRepeat(Animator updatedAnimation) {
+                    // You can use the animated value in a property that uses the
+                    // same type as the animation. In this case, you can use the
+                    // float value in the translationX property.
+                    tablayout.removeTab(tab);
+                }
+                @Override
+                public void onAnimationStart(Animator updatedAnimation) {
+                    // You can use the animated value in a property that uses the
+                    // same type as the animation. In this case, you can use the
+                    // float value in the translationX property.
+                    tablayout.removeTab(tab);
+                }
+            });
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator updatedAnimation) {
+                    // You can use the animated value in a property that uses the
+                    // same type as the animation. In this case, you can use the
+                    // float value in the translationX property.
+                    int animatedValue = (int)updatedAnimation.getAnimatedValue();
+                    LinearLayout linearLayout = (LinearLayout)tab.view;
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+                    layoutParams.width = animatedValue;
+                    linearLayout.setLayoutParams(layoutParams);
+                }
+            });
+        }
+    }
+    static public class NewsClassDialog extends DialogFragment {
+        ArrayList selectedItems;
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final boolean visible_update[] = new boolean[news_class_visible.length];
+            for(int i = 0; i < visible_update.length; i++) {
+                visible_update[i] = news_class_visible[i];
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Set the dialog title
+            builder.setTitle("编辑分类")
+                    // Specify the list array, the items to be selected by default (null for none),
+                    // and the listener through which to receive callbacks when items are selected
+                    .setMultiChoiceItems(news_class_names, visible_update,
+                            new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which,
+                                                    boolean isChecked) {
+                                    System.out.println(which);
+                                    visible_update[which] = isChecked;
+                                }
+                            })
+                    // Set the action buttons
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK, so save the selectedItems results somewhere
+                            // or return them to the component that opened the dialog
+                            long animation_duration = 250;
+                            for(int i = 0; i < visible_update.length; i++) {
+                                if(visible_update[i] != news_class_visible[i]) {
+                                    if(visible_update[i]) {
+                                        news_main_fragment.news_class_handler[i] = new ClassHandler(tablayout.newTab().setText(news_class_names[i]));
+                                        tablayout.addTab(news_main_fragment.news_class_handler[i].tab, 1);
+                                        news_class_handler[i].create_animation();
+                                    }else {
+                                        news_class_handler[i].delete_animation();
+                                    }
+                                }
+                                news_class_visible[i] = visible_update[i];
+                            }
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    });
+            return builder.create();
+        }
+    }
+
 }

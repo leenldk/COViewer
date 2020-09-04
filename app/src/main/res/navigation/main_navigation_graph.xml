@@ -9,19 +9,10 @@
         android:id="@+id/news_main_fragment"
         android:name="com.example.coviewer.news_main_fragment"
         android:label="fragment_news_main_fragment"
-        tools:layout="@layout/news_main_fragment" >
-        <action
-            android:id="@+id/to_choosing_news_class"
-            app:destination="@id/news_class_choosing_fragment" />
-    </fragment>
+        tools:layout="@layout/news_main_fragment" />
     <fragment
         android:id="@+id/data_main_fragment"
         android:name="com.example.coviewer.data_main_fragment"
         android:label="fragment_data_main_fragment"
         tools:layout="@layout/data_main_fragment" />
-    <fragment
-        android:id="@+id/news_class_choosing_fragment"
-        android:name="com.example.coviewer.news_class_choosing_fragment"
-        android:label="news_class_choosing_layout"
-        tools:layout="@layout/news_class_choosing_layout" />
 </navigation>

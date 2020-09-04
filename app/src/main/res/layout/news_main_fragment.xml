@@ -39,10 +39,10 @@
             android:id="@+id/news_class_tablayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:tabMaxWidth="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/news_list_search_edittext"
-            android:animateLayoutChanges="true"/>
+            app:layout_constraintTop_toBottomOf="@+id/news_list_search_edittext"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout2"
