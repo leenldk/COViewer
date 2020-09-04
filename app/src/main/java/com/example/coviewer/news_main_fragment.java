@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -49,6 +52,7 @@ public class news_main_fragment extends Fragment {
     static private ClassHandler[] news_class_handler = {null, null};
     private int news_type = 0;
     private boolean view_history = false;
+    private EditText search_edittext;
     public news_main_fragment() {
         // Required empty public constructor
     }
@@ -148,10 +152,10 @@ public class news_main_fragment extends Fragment {
                 if(tab.getText().equals("全部")) {
                     news_type = 0;
                 }
-                if(tab.getText().equals("+")) {
+                if(tab.getText().equals("新闻")) {
                     news_type = 1;
                 }
-                if(tab.getText().equals("+")) {
+                if(tab.getText().equals("论文")) {
                     news_type = 2;
                 }
                 if(tab.getText().equals("+")) {
@@ -188,6 +192,17 @@ public class news_main_fragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        search_edittext = ret_view.findViewById(R.id.news_list_search_edittext);
+
+        ((ImageButton)ret_view.findViewById(R.id.search_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(news_type);
+                System.out.println(view_history);
+                System.out.println(search_edittext.getText());
             }
         });
         return ret_view;
@@ -298,12 +313,13 @@ public class news_main_fragment extends Fragment {
                                 if(visible_update[i] != news_class_visible[i]) {
                                     if(visible_update[i]) {
                                         news_main_fragment.news_class_handler[i] = new ClassHandler(tablayout.newTab().setText(news_class_names[i]));
-                                        tablayout.addTab(news_main_fragment.news_class_handler[i].tab, 1);
+                                        tablayout.addTab(news_main_fragment.news_class_handler[i].tab, 1, false);
                                         news_class_handler[i].create_animation();
                                     }else {
                                         news_class_handler[i].delete_animation();
                                     }
                                 }
+                                tablayout.selectTab(tablayout.getTabAt(0));
                                 news_class_visible[i] = visible_update[i];
                             }
                         }
@@ -317,5 +333,8 @@ public class news_main_fragment extends Fragment {
             return builder.create();
         }
     }
-
+    public void search_click(View view) {
+        System.out.println(news_type);
+        System.out.println(view_history);
+    }
 }
