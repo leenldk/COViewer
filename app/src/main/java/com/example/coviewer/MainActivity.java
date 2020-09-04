@@ -11,19 +11,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.coviewer.network.JsonPraser;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.browse);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        JsonPraser praser = new JsonPraser();
+        praser.getEpidemic();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
