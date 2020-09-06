@@ -130,7 +130,10 @@ public class JsonPraser {
         int remain = start_page * page_size - newslist.size();
         Log.d(TAG, "getNewsList: remain : " + remain);
         if(remain > 0)
-            getNewsList(req_type, start_page, page_size, from_hisory, remain);
+            getNewsList(req_type, start_page, page_size, from_hisory, remain, keyword);
+    }
+
+    public void filterNews(String keyword) {
         System.out.println("!!!!!!!!!!!!");
         System.out.println(keyword);
         if(keyword != null && !keyword.equals("")) {
@@ -149,7 +152,7 @@ public class JsonPraser {
         }
     }
 
-    private void getNewsList(final String req_type, final int start_page, final int page_size, final boolean from_hisory, final int remain)
+    private void getNewsList(final String req_type, final int start_page, final int page_size, final boolean from_hisory, final int remain, final String keyword)
     {
         if(from_hisory) {
             Message message = new Message();
@@ -195,11 +198,12 @@ public class JsonPraser {
                     }
                     //.d(TAG, "news number: " + newslist.size());
                     if(t_remain <= 0) {
+                        filterNews(keyword);
                         Message message = new Message();
                         message.what = NETCALL_COMPLETE;
                         main_handler.sendMessage(message);
                     } else {
-                        getNewsList(req_type, start_page + 1, page_size, from_hisory, t_remain);
+                        getNewsList(req_type, start_page + 1, page_size, from_hisory, t_remain, keyword);
                     }
                 }
 
