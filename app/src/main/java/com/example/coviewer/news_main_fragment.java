@@ -140,6 +140,7 @@ public class news_main_fragment extends Fragment {
                 if (!recyclerView.canScrollVertically(1)) {
                     if(!scrolling_to_end) {
                         if(praser_action == 0) {
+                            System.out.println("roll bot!!!!!!!!!!!!!!");
                             praser_action = REFRESH_BOT;
                             praser.getNewsList(news_type, page + 1, page_size(), view_history);
                         }
@@ -156,6 +157,8 @@ public class news_main_fragment extends Fragment {
                 }
             }
         });
+
+        scrolling_to_end = true;
 
         pre_tab = "全部";
         unfinished_animations = 0;
@@ -288,6 +291,8 @@ public class news_main_fragment extends Fragment {
     private void refresh_callback() {
         if(praser_action == SEARCH) {
             adapter.newslist = praser.newslist;
+
+            page = 1;
             adapter.notifyDataSetChanged();
         }
         if(praser_action == REFRESH_TOP) {
@@ -298,6 +303,7 @@ public class news_main_fragment extends Fragment {
             //*
             adapter.newslist = praser.newslist;
             adapter.notifyItemRangeInserted(old_size, praser.newslist.size() - old_size);
+            page++;
             //*/
         }
         //*
@@ -306,7 +312,6 @@ public class news_main_fragment extends Fragment {
             System.out.println(I.title);
         }
         //*/
-        page = 1;
         old_size = praser.newslist.size();
         praser_action = 0;
         //praser.markAsHistory(praser.newslist.get(0));
@@ -319,9 +324,6 @@ public class news_main_fragment extends Fragment {
         }
         private void check_all_end() {
             if(unfinished_animations == 0) {
-                System.out.println("!!!!!!!!!!!!!!");
-                System.out.println("!!!!!!!!!!!!!!");
-                System.out.println("!!!!!!!!!!!!!!");
                 for(int i = 0; i <news_class_visible.length; i++) {
                     if(news_class_visible[i]) {
                         if(news_class_handler[i].tab.getText().equals(pre_tab)) {
