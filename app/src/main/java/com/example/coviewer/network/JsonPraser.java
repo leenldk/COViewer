@@ -99,6 +99,7 @@ public class JsonPraser {
      */
     public void refreshScanned() {
         current_page = 0;
+        newslist.clear();
         scannedset.clear();
     }
 
@@ -156,7 +157,7 @@ public class JsonPraser {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String responseData = response.body().string();
-                    Log.d(TAG, "getEvents: " + responseData.substring(0, 100));
+                    //Log.d(TAG, "getEvents: " + responseData.substring(0, 100));
                     JSONObject obj = JSON.parseObject(responseData);
                     JSONArray newsarray = (JSONArray)obj.get("data");
                     int newslen = newsarray.size();
@@ -167,12 +168,12 @@ public class JsonPraser {
                         News news = buildNews(object);
                         if(scannedset.contains(news._id)) continue;
                         t_remain--;
-                        Log.d(TAG, "build news ");
+                        //Log.d(TAG, "build news ");
                         scannedset.add(news._id);
                         newslist.add(news);
-                        Log.d(TAG, "add news: " + news._id);
+                        //Log.d(TAG, "add news: " + news._id);
                     }
-                    Log.d(TAG, "news number: " + newslist.size());
+                    //.d(TAG, "news number: " + newslist.size());
                     if(t_remain <= 0) {
                         Message message = new Message();
                         message.what = NETCALL_COMPLETE;
@@ -195,7 +196,7 @@ public class JsonPraser {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String responseData = response.body().string();
-                    Log.d(TAG, "onResponse: " + responseData.substring(0, 100));
+                    //Log.d(TAG, "onResponse: " + responseData.substring(0, 100));
                     JSONObject obj = JSON.parseObject(responseData);
                     for(Map.Entry<String, Object> entry : obj.entrySet()) {
                         //Log.d(TAG, "onResponse: " + entry.getKey());
@@ -204,7 +205,7 @@ public class JsonPraser {
 
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "onFailure: " + e.getMessage());
+                    //Log.e(TAG, "onFailure: " + e.getMessage());
                 }
             });
     }
@@ -224,7 +225,7 @@ public class JsonPraser {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String responseData = response.body().string();
-                    Log.d(TAG, "getEvents: " + responseData.substring(0, 100));
+                    //Log.d(TAG, "getEvents: " + responseData.substring(0, 100));
                     JSONObject obj = JSON.parseObject(responseData);
                     JSONArray newsarray = (JSONArray)obj.get("datas");
                     //Log.d(TAG, "onResponse: " + newsarray.size());
@@ -238,7 +239,7 @@ public class JsonPraser {
                         News news = buildNews(object);
                         newslist.add(news);
                     }
-                    Log.d(TAG, "news number: " + newsarray.size());
+                    //Log.d(TAG, "news number: " + newsarray.size());
                 }
 
                 @Override

@@ -7,9 +7,15 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coviewer.network.News;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsListViewHolder>{
-    private String[] data;
+    public ArrayList<News> newslist;
     static public class NewsListViewHolder extends RecyclerView.ViewHolder {
         public ConstraintLayout layout;
         public NewsListViewHolder(ConstraintLayout v) {
@@ -17,8 +23,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsLi
             layout = v;
         }
     }
-    public NewsListAdapter(String []_data) {
-        data = _data;
+    public NewsListAdapter() {
+        newslist = new  ArrayList<News>();
     }
     @Override
     public NewsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,11 +35,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsLi
     }
     @Override
     public void onBindViewHolder(NewsListViewHolder holder, int position) {
-        TextView textView = (TextView)holder.layout.findViewById(R.id.textView5);
-        textView.setText(data[position]);
+        ((TextView)holder.layout.findViewById(R.id.news_title)).setText(newslist.get(position).title);
+        ((TextView)holder.layout.findViewById(R.id.news_source)).setText(newslist.get(position).date);
+        //TextView textView = (TextView)holder.layout.findViewById(R.id.textView5);
+        //textView.setText(data[position]);
     }
     @Override
     public int getItemCount() {
-        return data.length;
+        return newslist.size();
     }
 }

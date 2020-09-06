@@ -14,13 +14,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.coviewer.network.JsonPraser;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int NETCALL_COMPLETE = 1;
     private static final String TAG = "MainActivity";
-    public JsonPraser praser;
-    public static Handler network_handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,20 +27,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        network_handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.what == NETCALL_COMPLETE) {
-                    Log.d(TAG, "handleMessage: network call complete");
-                    praser.markAsHistory(praser.newslist.get(0));
-                    Log.d(TAG, "handleMessage: " + praser.historylist.size());
-                }
-            }
-        };
-        praser = new JsonPraser(this, network_handler);
-        //praser.getEpidemic();
-        praser.getNewsList("news", 1, 10, false);
-        praser.getNewsList("news", 2, 7, false);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
