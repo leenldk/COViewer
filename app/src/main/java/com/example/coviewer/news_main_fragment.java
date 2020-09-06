@@ -142,7 +142,7 @@ public class news_main_fragment extends Fragment {
                         if(praser_action == 0) {
                             System.out.println("roll bot!!!!!!!!!!!!!!");
                             praser_action = REFRESH_BOT;
-                            praser.getNewsList(news_type, page + 1, page_size(), view_history);
+                            praser.getNewsList(news_type, page + 1, page_size(), view_history, search_edittext.getText().toString());
                         }
                     }
                     scrolling_to_end = true;
@@ -276,16 +276,17 @@ public class news_main_fragment extends Fragment {
     }
     int page_size() {
         if(search_edittext.getText() == null) {
-            return 100;
+            return 10;
         }
-        System.out.println("!!!!!!!!!");
-        System.out.println(search_edittext.getText());
-        return 10;
+        if(search_edittext.getText().toString().equals("")) {
+            return 10;
+        }
+        return 100;
     }
     private void search() {
         praser.refreshScanned();
         praser_action = SEARCH;
-        praser.getNewsList(news_type, 1, page_size(), view_history);
+        praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText().toString());
         //praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText());
     }
     private void refresh_callback() {

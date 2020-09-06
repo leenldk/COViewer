@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
     }
     @Override

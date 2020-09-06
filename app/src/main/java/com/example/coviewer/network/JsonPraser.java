@@ -113,6 +113,7 @@ public class JsonPraser {
         news.visited = true;
         historylist.add(news);
         saveNewsToHistory(news);
+        saveCache();
     }
 
     /**
@@ -121,15 +122,27 @@ public class JsonPraser {
      * @param page_size : 页大小
      * @param from_hisory : 是否从历史
      */
-    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory)
+    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory) {
+        getNewsList(req_type, start_page, page_size, from_hisory, "");
+    }
+    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory, String keyword)
     {
         int remain = start_page * page_size - newslist.size();
         Log.d(TAG, "getNewsList: remain : " + remain);
         if(remain > 0)
             getNewsList(req_type, start_page, page_size, from_hisory, remain);
+
+        if(keyword != null && keyword != "") {
+            ArrayList<News> templist = new ArrayList<>();
+            for(News news : newslist) {
+                if(news.title.contains(keyword) || news.content.contains(keyword))
+                    templist.add(news);
+            }
+            newslist = templist;
+        }
     }
 
-    void getNewsList(final String req_type, final int start_page, final int page_size, final boolean from_hisory, final int remain)
+    private void getNewsList(final String req_type, final int start_page, final int page_size, final boolean from_hisory, final int remain)
     {
         if(from_hisory) {
             Message message = new Message();
