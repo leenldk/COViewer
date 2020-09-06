@@ -140,7 +140,6 @@ public class news_main_fragment extends Fragment {
                 if (!recyclerView.canScrollVertically(1)) {
                     if(!scrolling_to_end) {
                         if(praser_action == 0) {
-                            System.out.println("roll bot!!!!!!!!!!!!!!");
                             praser_action = REFRESH_BOT;
                             praser.getNewsList(news_type, page + 1, page_size(), view_history, search_edittext.getText().toString());
                         }
@@ -307,7 +306,7 @@ public class news_main_fragment extends Fragment {
             page++;
             //*/
         }
-        //*
+        /*
         System.out.println("callback");
         for(News I : adapter.newslist) {
             System.out.println(I.title);

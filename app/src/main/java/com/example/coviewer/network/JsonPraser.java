@@ -131,14 +131,21 @@ public class JsonPraser {
         Log.d(TAG, "getNewsList: remain : " + remain);
         if(remain > 0)
             getNewsList(req_type, start_page, page_size, from_hisory, remain);
-
-        if(keyword != null && keyword != "") {
+        System.out.println("!!!!!!!!!!!!");
+        System.out.println(keyword);
+        if(keyword != null && !keyword.equals("")) {
             ArrayList<News> templist = new ArrayList<>();
+            System.out.println("@@@@@@@@@@@@@@@@@");
             for(News news : newslist) {
-                if(news.title.contains(keyword) || news.content.contains(keyword))
+                if(news.title.contains(keyword)) {
                     templist.add(news);
+                    System.out.println(news.title);
+                }
             }
             newslist = templist;
+            for(News news : newslist) {
+                System.out.println(news.title);
+            }
         }
     }
 
