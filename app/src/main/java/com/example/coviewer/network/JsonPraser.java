@@ -122,33 +122,42 @@ public class JsonPraser {
      * @param page_size : 页大小
      * @param from_hisory : 是否从历史
      */
-    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory) {
-        getNewsList(req_type, start_page, page_size, from_hisory, "");
-    }
+
     public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory, String keyword)
     {
         int remain = start_page * page_size - newslist.size();
         Log.d(TAG, "getNewsList: remain : " + remain);
-        if(remain > 0)
+        if(from_hisory) {
+            Message message = new Message();
+            message.what = NETCALL_COMPLETE;
+            main_handler.sendMessage(message);
+            // todo : notify;
+            return;
+        }
+        if(remain > 0) {
             getNewsList(req_type, start_page, page_size, from_hisory, remain, keyword);
+        }else {
+            if(from_hisory) {
+                Message message = new Message();
+                message.what = NETCALL_COMPLETE;
+                main_handler.sendMessage(message);
+                // todo : notify;
+                return;
+            }
+        }
     }
-
+    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory) {
+        getNewsList(req_type, start_page, page_size, from_hisory, "");
+    }
     public void filterNews(String keyword) {
-        System.out.println("!!!!!!!!!!!!");
-        System.out.println(keyword);
         if(keyword != null && !keyword.equals("")) {
             ArrayList<News> templist = new ArrayList<>();
-            System.out.println("@@@@@@@@@@@@@@@@@");
             for(News news : newslist) {
                 if(news.title.contains(keyword)) {
                     templist.add(news);
-                    System.out.println(news.title);
                 }
             }
             newslist = templist;
-            for(News news : newslist) {
-                System.out.println(news.title);
-            }
         }
     }
 
@@ -285,6 +294,11 @@ public class JsonPraser {
         } catch(IOException e) {
             Log.e(TAG, "JsonPraser: ", e);
         }
+    }
+
+    public boolean viewed(News news) {
+        String s = news._id;
+        return historyset.contains(s);
     }
 
 }

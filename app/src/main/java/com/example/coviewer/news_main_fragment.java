@@ -47,6 +47,7 @@ public class news_main_fragment extends Fragment {
     private static final int REFRESH_TOP = 1;
     private static final int REFRESH_BOT = 2;
     private static final int SEARCH = 3;
+    private static final int HISTORY = 4;
     private static final int PAGE_SIZE = 10;
     private int page = 1;
     private int old_size = 0;
@@ -71,7 +72,7 @@ public class news_main_fragment extends Fragment {
     private String news_type = "all";
     private boolean view_history = false;
     private EditText search_edittext;
-    public JsonPraser praser;
+    static public JsonPraser praser;
     public NewsListAdapter adapter;
     public static Handler network_handler;
     int now_size;
@@ -139,7 +140,7 @@ public class news_main_fragment extends Fragment {
 
                 if (!recyclerView.canScrollVertically(1)) {
                     if(!scrolling_to_end) {
-                        if(praser_action == 0) {
+                        if(praser_action == 0 && !view_history) {
                             praser_action = REFRESH_BOT;
                             praser.getNewsList(news_type, page + 1, page_size(), view_history, search_edittext.getText().toString());
                         }
@@ -248,9 +249,11 @@ public class news_main_fragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 if(tab.getPosition() == 0) {
                     view_history = false;
+                    search();
                 }
                 if(tab.getPosition() == 1) {
                     view_history = true;
+                    search();
                 }
             }
             @Override
@@ -283,9 +286,14 @@ public class news_main_fragment extends Fragment {
         return 100;
     }
     private void search() {
-        praser.refreshScanned();
-        praser_action = SEARCH;
-        praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText().toString());
+        if(!view_history) {
+            praser.refreshScanned();
+            praser_action = SEARCH;
+            praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText().toString());
+        }else {
+            praser_action = HISTORY;
+            praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText().toString());
+        }
         //praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText());
     }
     private void refresh_callback() {
@@ -306,13 +314,20 @@ public class news_main_fragment extends Fragment {
             page++;
             //*/
         }
+        if(praser_action == HISTORY) {
+            //*
+            adapter.newslist = praser.historylist;
+            page = 1;
+            adapter.notifyDataSetChanged();
+            //*/
+        }
         /*
         System.out.println("callback");
         for(News I : adapter.newslist) {
             System.out.println(I.title);
         }
         //*/
-        old_size = praser.newslist.size();
+        old_size = adapter.newslist.size();
         praser_action = 0;
         //praser.markAsHistory(praser.newslist.get(0));
     }

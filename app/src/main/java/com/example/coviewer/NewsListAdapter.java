@@ -1,10 +1,15 @@
 package com.example.coviewer;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coviewer.network.News;
@@ -34,9 +39,23 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsLi
         return vh;
     }
     @Override
-    public void onBindViewHolder(NewsListViewHolder holder, int position) {
+    public void onBindViewHolder(NewsListViewHolder holder, final int position) {
         ((TextView)holder.layout.findViewById(R.id.news_title)).setText(newslist.get(position).title);
         ((TextView)holder.layout.findViewById(R.id.news_source)).setText(newslist.get(position).date);
+        final News news = newslist.get(position);
+        if(news_main_fragment.praser.viewed(news)) {
+            ((TextView)holder.layout.findViewById(R.id.news_title)).setTextColor(0xffaaaaaa);
+        }
+        ((TextView)holder.layout.findViewById(R.id.news_title)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("news", news);
+                news_main_fragment.praser.markAsHistory(news);
+                Navigation.findNavController(v).navigate(R.id.action_view_news_body, bundle);
+
+            }
+        });
         //TextView textView = (TextView)holder.layout.findViewById(R.id.textView5);
         //textView.setText(data[position]);
     }

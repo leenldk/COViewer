@@ -8,4 +8,6 @@
     <color name="colorNewsUpDownBackground">#ffffea</color>
     <color name="colorListBackground">#fafafa</color>
     <color name="colorNavigationBar">#fffdaf</color>
+    <color name="mygray">#aaaaaa</color>
+
 </resources>

@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.coviewer.network.News;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +64,12 @@ public class news_body_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.news_body_fragment, container, false);
+        View ret_view = inflater.inflate(R.layout.news_body_fragment, container, false);
+        News news = (News)getArguments().getSerializable("news");
+        ((TextView)ret_view.findViewById(R.id.news_body_title)).setText(news.title);
+        ((TextView)ret_view.findViewById(R.id.news_body_content)).setText(news.content);
+        ((TextView)ret_view.findViewById(R.id.news_body_date)).setText(news.date);
+        ((TextView)ret_view.findViewById(R.id.news_body_source)).setText(news.source);
+        return ret_view;
     }
 }

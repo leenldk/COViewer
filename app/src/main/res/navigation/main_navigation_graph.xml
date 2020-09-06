@@ -23,5 +23,9 @@
         android:id="@+id/news_body_fragment"
         android:name="com.example.coviewer.news_body_fragment"
         android:label="news_body_fragment"
-        tools:layout="@layout/news_body_fragment" />
+        tools:layout="@layout/news_body_fragment" >
+        <argument
+            android:name="news"
+            app:argType="com.example.coviewer.network.News" />
+    </fragment>
 </navigation>
