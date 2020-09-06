@@ -100,6 +100,7 @@ public class JsonPraser {
     public void refreshScanned() {
         current_page = 0;
         scannedset.clear();
+        newslist.clear();
     }
 
     /**
@@ -112,6 +113,7 @@ public class JsonPraser {
         news.visited = true;
         historylist.add(news);
         saveNewsToHistory(news);
+        saveCache();
     }
 
     /**
@@ -120,12 +122,21 @@ public class JsonPraser {
      * @param page_size : 页大小
      * @param from_hisory : 是否从历史
      */
-    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory)
+    public void getNewsList(String req_type, int start_page, int page_size, boolean from_hisory, String keyword)
     {
         int remain = start_page * page_size - newslist.size();
         Log.d(TAG, "getNewsList: remain : " + remain);
         if(remain > 0)
             getNewsList(req_type, start_page, page_size, from_hisory, remain);
+
+        if(keyword != null && keyword != "") {
+            ArrayList<News> templist = new ArrayList<>();
+            for(News news : newslist) {
+                if(news.title.contains(keyword) || news.content.contains(keyword))
+                    templist.add(news);
+            }
+            newslist = templist;
+        }
     }
 
     void getNewsList(final String req_type, final int start_page, final int page_size, final boolean from_hisory, final int remain)
@@ -179,26 +190,6 @@ public class JsonPraser {
                         main_handler.sendMessage(message);
                     } else {
                         getNewsList(req_type, start_page + 1, page_size, from_hisory, t_remain);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "onFailure: " + e.getMessage());
-                }
-            });
-    }
-
-    public void getEpidemic() {
-        HttpUtil.sendHttpRequest("https://covid-dashboard.aminer.cn/api/dist/epidemic.json",
-            new okhttp3.Callback() {
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String responseData = response.body().string();
-                    Log.d(TAG, "onResponse: " + responseData.substring(0, 100));
-                    JSONObject obj = JSON.parseObject(responseData);
-                    for(Map.Entry<String, Object> entry : obj.entrySet()) {
-                        //Log.d(TAG, "onResponse: " + entry.getKey());
                     }
                 }
 

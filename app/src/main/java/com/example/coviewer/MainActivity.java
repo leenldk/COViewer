@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.browse);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        network_handler = new Handler() {
+        Log.d(TAG, "onCreate: in create");
+        network_handler = new Handler(Looper.myLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.what == NETCALL_COMPLETE) {
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         };
         praser = new JsonPraser(this, network_handler);
         //praser.getEpidemic();
-        praser.getNewsList("news", 1, 10, false);
-        praser.getNewsList("news", 2, 7, false);
+        praser.getNewsList("news", 1, 10, false, null);
+        praser.getNewsList("news", 2, 7, false, null);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
