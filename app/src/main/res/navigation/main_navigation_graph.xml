@@ -28,4 +28,10 @@
             android:name="news"
             app:argType="com.example.coviewer.network.News" />
     </fragment>
+    <fragment
+        android:id="@+id/graph_main_fragment"
+        android:name="com.example.coviewer.graph_main_fragment"
+        android:label="fragment_graph_main_fragment"
+        tools:layout="@layout/graph_main_fragment" >
+    </fragment>
 </navigation>
