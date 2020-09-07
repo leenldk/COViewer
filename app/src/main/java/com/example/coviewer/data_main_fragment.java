@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.graphics.RectF;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -14,11 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.coviewer.network.EpidemicGetter;
 import com.example.coviewer.network.EpidemicMap;
+import com.example.coviewer.network.JsonPraser;
+import com.example.coviewer.network.News;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -34,6 +41,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
+
+import static com.example.coviewer.network.JsonPraser.NETCALL_COMPLETE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -164,6 +173,17 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
 
         Log.d(TAG, "onCreateView: in getEpidemic");
         epidemicGetter.getEpidemic();
+
+        RecyclerView recyclerView = (RecyclerView) ret_view.findViewById(R.id.data_list_recyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        //*
+        /*
+        The array contains elements on the list
+         */
+        String []a = {"北京", "tianjin", "butthole"};
+        DataListAdapter adapter= new DataListAdapter(a);
+        recyclerView.setAdapter(adapter);
 
         return ret_view;
     }
@@ -343,4 +363,46 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
 
     @Override
     public void onNothingSelected() {}
+
+    static public class DataListAdapter extends RecyclerView.Adapter<com.example.coviewer.data_main_fragment.DataListAdapter.DataListViewHolder>{
+        String []a;
+        static public class DataListViewHolder extends RecyclerView.ViewHolder {
+            public ConstraintLayout layout;
+            public DataListViewHolder(ConstraintLayout v) {
+                super(v);
+                layout = v;
+            }
+        }
+        public DataListAdapter(String []_a) {
+            a = _a;
+        }
+        @Override
+        public com.example.coviewer.data_main_fragment.DataListAdapter.DataListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.data_piece_layout, parent, false);
+            com.example.coviewer.data_main_fragment.DataListAdapter.DataListViewHolder vh = new com.example.coviewer.data_main_fragment.DataListAdapter.DataListViewHolder(v);
+            return vh;
+        }
+        @Override
+        public void onBindViewHolder(com.example.coviewer.data_main_fragment.DataListAdapter.DataListViewHolder holder, final int position) {
+            ((Button)holder.layout.findViewById(R.id.button)).setText(a[position]);
+            ((Button)holder.layout.findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*
+                    Define what to do next
+                     */
+                    System.out.println(position);
+                }
+            });
+            //TextView textView = (TextView)holder.layout.findViewById(R.id.textView5);
+            //textView.setText(data[position]);
+        }
+        @Override
+        public int getItemCount() {
+            return a.length;
+        }
+    }
+
+
 }
