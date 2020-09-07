@@ -15,4 +15,9 @@
         android:name="com.example.coviewer.data_main_fragment"
         android:label="fragment_data_main_fragment"
         tools:layout="@layout/data_main_fragment" />
+    <fragment
+        android:id="@+id/graph_main_fragment"
+        android:name="com.example.coviewer.graph_main_fragment"
+        android:label="fragment_graph_main_fragment"
+        tools:layout="@layout/graph_main_fragment" />
 </navigation>
