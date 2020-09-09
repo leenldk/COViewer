@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -76,6 +78,7 @@ public class news_main_fragment extends Fragment {
     public NewsListAdapter adapter;
     public static Handler network_handler;
     int now_size;
+    static private ProgressBar progressbar;
     public news_main_fragment() {
         // Required empty public constructor
     }
@@ -114,7 +117,7 @@ public class news_main_fragment extends Fragment {
         // Inflate the layout for this fragment
         View ret_view =  inflater.inflate(R.layout.news_main_fragment, container, false);
 
-
+        progressbar = ret_view.findViewById(R.id.progressBar);
         RecyclerView recyclerView = (RecyclerView) ret_view.findViewById(R.id.news_list_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -142,6 +145,7 @@ public class news_main_fragment extends Fragment {
                     if(!scrolling_to_end) {
                         if(praser_action == 0 && !view_history) {
                             praser_action = REFRESH_BOT;
+                            progressbar.setVisibility(View.VISIBLE);
                             praser.getNewsList(news_type, page + 1, page_size(), view_history, search_edittext.getText().toString());
                         }
                     }
@@ -267,7 +271,7 @@ public class news_main_fragment extends Fragment {
         });
 
         search_edittext = ret_view.findViewById(R.id.news_list_search_edittext);
-
+        //search_edittext.setInputType(InputType.TYPE_NULL);
         ((ImageButton)ret_view.findViewById(R.id.search_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,6 +290,7 @@ public class news_main_fragment extends Fragment {
         return 100;
     }
     private void search() {
+        progressbar.setVisibility(View.VISIBLE);
         if(!view_history) {
             praser.refreshScanned();
             praser_action = SEARCH;
@@ -297,6 +302,7 @@ public class news_main_fragment extends Fragment {
         //praser.getNewsList(news_type, 1, page_size(), view_history, search_edittext.getText());
     }
     private void refresh_callback() {
+        progressbar.setVisibility(View.GONE);
         if(praser_action == SEARCH) {
             adapter.newslist = praser.newslist;
 

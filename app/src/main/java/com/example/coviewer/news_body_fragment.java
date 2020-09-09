@@ -1,17 +1,24 @@
 package com.example.coviewer;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.coviewer.network.News;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +77,32 @@ public class news_body_fragment extends Fragment {
         ((TextView)ret_view.findViewById(R.id.news_body_content)).setText(news.content);
         ((TextView)ret_view.findViewById(R.id.news_body_date)).setText(news.date);
         ((TextView)ret_view.findViewById(R.id.news_body_source)).setText(news.source);
+        ((Button)ret_view.findViewById(R.id.button_share)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareDialog dialog = new ShareDialog();
+                dialog.show(getActivity().getSupportFragmentManager(), "share_dialog");
+            }
+        });
         return ret_view;
+    }
+    static public class ShareDialog extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Set the dialog title
+            String a[] = {"微信", "微博"};
+            builder.setTitle("分享")
+                    // Specify the list array, the items to be selected by default (null for none),
+                    // and the listener through which to receive callbacks when items are selected
+                    .setItems(a,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+            return builder.create();
+        }
     }
 }
