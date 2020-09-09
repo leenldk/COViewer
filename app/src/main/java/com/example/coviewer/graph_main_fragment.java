@@ -81,6 +81,7 @@ public class graph_main_fragment extends Fragment implements View.OnClickListene
         View ret_view = inflater.inflate(R.layout.graph_main_fragment, container, false);
         listView = ret_view.findViewById(R.id.expandable_graph_list);
         listView.setAdapter(adapter);
+
         Button btn = (Button)ret_view.findViewById(R.id.graph_button);
         btn.setOnClickListener(this);
         return ret_view;

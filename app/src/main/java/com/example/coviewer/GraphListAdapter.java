@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.coviewer.network.GraphEntity;
@@ -18,6 +19,7 @@ public class GraphListAdapter extends BaseExpandableListAdapter {
     ArrayList<GraphEntity> group_list;
     public static Handler network_handler;
     GraphGetter graphGetter;
+    GraphEntryListAdapter relationAdapter;
 
     public GraphListAdapter(Handler handler) {
         group_list = new ArrayList<>();
@@ -91,6 +93,10 @@ public class GraphListAdapter extends BaseExpandableListAdapter {
             ImageView img = (ImageView) view.findViewById(R.id.entry_image);
             img.setImageBitmap(entity.bitmap);
         }
+        relationAdapter = new GraphEntryListAdapter(viewGroup.getContext(), entity.relations, this);
+        ListView graphEntry = view.findViewById(R.id.graph_entry);
+        graphEntry.setAdapter(relationAdapter);
+        Utility.setListViewHeightBasedOnChildren(graphEntry);
         return view;
     }
 
