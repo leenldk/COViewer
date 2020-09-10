@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:id = "@+id/graph_content"
-    android:text = "example content"
-    android:gravity = "center">
-    </TextView>
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:id = "@+id/graph_content"
+android:text = "example content"
+android:gravity = "center">
+</TextView>

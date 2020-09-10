@@ -59,8 +59,14 @@ public class MainActivity extends AppCompatActivity {
                 ((DrawerLayout) findViewById(R.id.main_drawerlayout)).closeDrawers();
                 return true;
             case R.id.main_drawer_item_four:
+                Log.d(TAG, "main_drawer_button_click: event");
+                Navigation.findNavController(findViewById((R.id.main_fragment_host))).navigate(R.id.event_main_fragment);
+                ((DrawerLayout) findViewById(R.id.main_drawerlayout)).closeDrawers();
                 return true;
             case R.id.main_drawer_item_five:
+                Log.d(TAG, "main_drawer_button_click: expert");
+                Navigation.findNavController(findViewById((R.id.main_fragment_host))).navigate(R.id.expert_main_fragment);
+                ((DrawerLayout) findViewById(R.id.main_drawerlayout)).closeDrawers();
                 return true;
             default:
                 return false;
