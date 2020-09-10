@@ -66,6 +66,9 @@ public class graph_main_fragment extends Fragment implements View.OnClickListene
                 if (msg.what == NETCALL_COMPLETE) {
                     Log.d(TAG, "handleMessage: graph call complete");
                     adapter.updateFromResponse();
+                    int size = adapter.getGroupCount();
+                    for(int i = 0; i < size; i++)
+                        listView.collapseGroup(i);
                 } else if(msg.what == IMAGEGET_COMPLETE) {
                     Log.d(TAG, "handleMessage: image get complete");
                     adapter.notifyDataSetChanged();
