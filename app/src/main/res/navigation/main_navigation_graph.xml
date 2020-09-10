@@ -40,4 +40,10 @@
         android:label="fragment_event_main_fragment"
         tools:layout="@layout/event_main_fragment" >
     </fragment>
+    <fragment
+        android:id="@+id/expert_main_fragment"
+        android:name="com.example.coviewer.expert_main_fragment"
+        android:label="fragment_expert_main_fragment"
+        tools:layout="@layout/expert_main_fragment" >
+    </fragment>
 </navigation>
