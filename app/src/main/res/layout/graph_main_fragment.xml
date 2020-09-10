@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    
-    <ExpandableListView
-        android:id = "@+id/expandable_graph_list"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ExpandableListView>
-    
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="80dp"
-        android:id="@+id/graph_button"
-        android:text="button"/>
+
+        <ExpandableListView
+            android:id="@+id/expandable_graph_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/graph_search_edittext"
+            tools:layout_editor_absoluteX="0dp"></ExpandableListView>
+
+        <EditText
+            android:id="@+id/graph_search_edittext"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/search_bg"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#575757"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/graph_button"
+            android:layout_width="34dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="-2dp"
+            android:background="@drawable/search"
+            app:layout_constraintEnd_toEndOf="@+id/graph_search_edittext"
+            app:layout_constraintTop_toTopOf="@+id/graph_search_edittext" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

@@ -178,7 +178,7 @@ public class data_main_fragment extends Fragment implements OnChartValueSelected
         recyclerView.setAdapter(adapter);
         TabLayout tab_global = ret_view.findViewById(R.id.tab_global);
         TabLayout tab_three = ret_view.findViewById(R.id.tab_three);
-        case_global = false;`
+        case_global = false;
         case_type = new boolean[3];
         case_type[0] = true;
         case_type[1] = false;

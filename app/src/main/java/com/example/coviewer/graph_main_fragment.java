@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ public class graph_main_fragment extends Fragment implements View.OnClickListene
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private View root_view;
     public graph_main_fragment() {
         // Required empty public constructor
     }
@@ -84,12 +85,17 @@ public class graph_main_fragment extends Fragment implements View.OnClickListene
 
         Button btn = (Button)ret_view.findViewById(R.id.graph_button);
         btn.setOnClickListener(this);
+        root_view = ret_view;
         return ret_view;
     }
 
     @Override
     public void onClick(View view) {
         Log.d(TAG, "onClick: button");
-        adapter.netRequest("病毒");
+        if(((EditText)root_view.findViewById(R.id.graph_search_edittext)).getText().length() == 0) {
+            return ;
+        }
+        String keyword = ((EditText)root_view.findViewById(R.id.graph_search_edittext)).getText().toString();
+        adapter.netRequest(keyword);
     }
 }
