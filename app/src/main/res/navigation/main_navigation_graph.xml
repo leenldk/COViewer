@@ -34,4 +34,10 @@
         android:label="fragment_graph_main_fragment"
         tools:layout="@layout/graph_main_fragment" >
     </fragment>
+    <fragment
+        android:id="@+id/event_main_fragment"
+        android:name="com.example.coviewer.event_main_fragment"
+        android:label="fragment_event_main_fragment"
+        tools:layout="@layout/event_main_fragment" >
+    </fragment>
 </navigation>
