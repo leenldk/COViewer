@@ -3,6 +3,7 @@ package com.example.coviewer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -72,7 +73,7 @@ public class news_body_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View ret_view = inflater.inflate(R.layout.news_body_fragment, container, false);
-        News news = (News)getArguments().getSerializable("news");
+        final News news = (News)getArguments().getSerializable("news");
         ((TextView)ret_view.findViewById(R.id.news_body_title)).setText(news.title);
         ((TextView)ret_view.findViewById(R.id.news_body_content)).setText(news.content);
         ((TextView)ret_view.findViewById(R.id.news_body_date)).setText(news.date);
@@ -80,8 +81,17 @@ public class news_body_fragment extends Fragment {
         ((Button)ret_view.findViewById(R.id.button_share)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, news.content);
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, "分享");
+                startActivity(shareIntent);
+                /*
                 ShareDialog dialog = new ShareDialog();
                 dialog.show(getActivity().getSupportFragmentManager(), "share_dialog");
+                 */
             }
         });
         return ret_view;

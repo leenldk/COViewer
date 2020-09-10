@@ -39,6 +39,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.MPPointF;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -49,8 +50,7 @@ import static com.example.coviewer.network.JsonPraser.NETCALL_COMPLETE;
  * Use the {@link data_main_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarChangeListener,
-        OnChartValueSelectedListener {
+public class data_main_fragment extends Fragment implements OnChartValueSelectedListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,6 +92,8 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
     private TextView tvX, tvY;
     public static Handler network_handler;
     public EpidemicGetter epidemicGetter;
+    private boolean case_global;
+    private boolean[] case_type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,14 +126,6 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
         View ret_view = inflater.inflate(R.layout.data_main_fragment, container, false);
 
 
-        tvX = ret_view.findViewById(R.id.tvXMax);
-        tvY = ret_view.findViewById(R.id.tvYMax);
-
-        seekBarX = ret_view.findViewById(R.id.seekBar1);
-        seekBarY = ret_view.findViewById(R.id.seekBar2);
-
-        seekBarY.setOnSeekBarChangeListener(this);
-        seekBarX.setOnSeekBarChangeListener(this);
 
         chart = ret_view.findViewById(R.id.chart1);
         chart.setOnChartValueSelectedListener(this);
@@ -160,8 +154,6 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
         chart.setFitBars(true);
         chart.animateY(1500);
 
-        seekBarY.setProgress(50);
-        seekBarX.setProgress(12);
 
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -184,10 +176,59 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
         String []a = {"北京", "tianjin", "butthole"};
         DataListAdapter adapter= new DataListAdapter(a);
         recyclerView.setAdapter(adapter);
+        TabLayout tab_global = ret_view.findViewById(R.id.tab_global);
+        TabLayout tab_three = ret_view.findViewById(R.id.tab_three);
+        case_global = false;`
+        case_type = new boolean[3];
+        case_type[0] = true;
+        case_type[1] = false;
+        case_type[2] = false;
+        search();
+        tab_global.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 0) {
+                    case_global = false;
+                    search();
+                }
+                if(tab.getPosition() == 1) {
+                    case_global = true;
+                    search();
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        tab_three.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                for(int i = 0; i < case_type.length; i++) {
+                    case_type[i] = false;
+                }
+                case_type[tab.getPosition()] = true;
+                search();
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         return ret_view;
     }
-
+    private void search() {
+        System.out.println(case_global);
+        System.out.println(case_type);  //size-3 array, 0:new, 1:death, 2: confirmed
+    }
     private void updateChart(final EpidemicMap map) {
         Log.d(TAG, "updateChart: begin");
         map.dosort();
@@ -324,22 +365,6 @@ public class data_main_fragment extends Fragment implements SeekBar.OnSeekBarCha
         }
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        /*tvX.setText(String.valueOf(seekBarX.getProgress()));
-        tvY.setText(String.valueOf(seekBarY.getProgress()));
-
-        setData(seekBarX.getProgress(), seekBarY.getProgress());
-        chart.setFitBars(true);
-        chart.invalidate(); */
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {}
 
     private final RectF mOnValueSelectedRectF = new RectF();
 

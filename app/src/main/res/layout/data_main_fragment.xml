@@ -11,66 +11,61 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />-->
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/chart1"
-            android:layout_width="match_parent"
-            android:layout_height="529dp"
-            android:layout_above="@+id/seekBar1"
-            android:background="@android:color/white" />
-
-        <SeekBar
-            android:id="@+id/seekBar2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="8dp"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/tvYMax"
-            android:max="200"
-            android:paddingBottom="12dp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvXMax"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/seekBar1"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="right"
-            android:text="@string/dash"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_global"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <SeekBar
-            android:id="@+id/seekBar1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seekBar2"
-            android:layout_margin="8dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="35dp"
-            android:layout_toLeftOf="@+id/tvXMax"
-            android:max="500"
-            android:paddingBottom="12dp" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="中国" />
 
-        <TextView
-            android:id="@+id/tvYMax"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/seekBar2"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="right"
-            android:text="@string/dash"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全球" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新增" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="死亡" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="确诊" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="529dp"
+                android:background="@android:color/white" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/data_list_drawer"
