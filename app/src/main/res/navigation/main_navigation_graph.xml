@@ -15,11 +15,6 @@
             app:destination="@id/news_body_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/data_main_fragment"
-        android:name="com.example.coviewer.data_main_fragment"
-        android:label="fragment_data_main_fragment"
-        tools:layout="@layout/data_main_fragment" />
-    <fragment
         android:id="@+id/news_body_fragment"
         android:name="com.example.coviewer.news_body_fragment"
         android:label="news_body_fragment"
@@ -28,6 +23,11 @@
             android:name="news"
             app:argType="com.example.coviewer.network.News" />
     </fragment>
+    <fragment
+        android:id="@+id/data_main_fragment"
+        android:name="com.example.coviewer.data_main_fragment"
+        android:label="fragment_data_main_fragment"
+        tools:layout="@layout/data_main_fragment" />
     <fragment
         android:id="@+id/graph_main_fragment"
         android:name="com.example.coviewer.graph_main_fragment"
@@ -45,5 +45,17 @@
         android:name="com.example.coviewer.expert_main_fragment"
         android:label="fragment_expert_main_fragment"
         tools:layout="@layout/expert_main_fragment" >
+        <action
+            android:id="@+id/action_view_expert_body"
+            app:destination="@id/expert_body_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expert_body_fragment"
+        android:name="com.example.coviewer.expert_body_fragment"
+        android:label="expert_body_fragment"
+        tools:layout="@layout/expert_body_fragment" >
+        <argument
+            android:name="expert"
+            app:argType="com.example.coviewer.network.Expert" />
     </fragment>
 </navigation>

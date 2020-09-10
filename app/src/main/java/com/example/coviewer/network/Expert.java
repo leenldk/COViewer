@@ -2,10 +2,10 @@ package com.example.coviewer.network;
 
 import android.graphics.Bitmap;
 
-public class Expert {
+public class Expert implements java.io.Serializable {
     public String id;
-    public String name, position;
-    public String bio, edu;
-    public Bitmap avatar;
+    public String name, position, avatar;
+    public String bio;
+    public Bitmap bitmap;
     boolean is_passedaway;
 }
