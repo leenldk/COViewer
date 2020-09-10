@@ -5,6 +5,9 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="50dp"
 android:id = "@+id/graph_content"
-android:text = "example content"
+android:textStyle="bold"
+    android:textSize="15dp"
+    android:layout_margin="10dp"
+    android:text = "example content"
 android:gravity = "center">
 </TextView>

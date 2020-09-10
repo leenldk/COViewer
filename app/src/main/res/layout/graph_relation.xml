@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_margin="30dp"
     android:gravity="center"
@@ -10,10 +10,27 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id = "@+id/relation_string"
+        android:text = "example text"
+        android:layout_weight="1"
+        android:gravity = "center"
+        android:layout_margin="10dp">
+    </TextView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:gravity = "center"
+        android:layout_weight="1"
+        android:id = "@+id/relation_image"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id = "@+id/relation_label"
         android:text = "example text"
         android:textColor="@color/colorAccent"
         android:gravity = "center"
+        android:layout_weight="1"
         android:layout_margin="10dp">
     </TextView>
 </LinearLayout>

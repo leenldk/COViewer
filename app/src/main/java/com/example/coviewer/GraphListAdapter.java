@@ -20,6 +20,7 @@ public class GraphListAdapter extends BaseExpandableListAdapter {
     public static Handler network_handler;
     GraphGetter graphGetter;
     GraphEntryListAdapter relationAdapter;
+    GraphPropertiesAdapter propertiesAdapter;
 
     public GraphListAdapter(Handler handler) {
         group_list = new ArrayList<>();
@@ -79,6 +80,7 @@ public class GraphListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.graph_content, viewGroup, false);
         ((TextView)view).setText((String)getGroup(i));
+
         return view;
     }
 
@@ -87,15 +89,33 @@ public class GraphListAdapter extends BaseExpandableListAdapter {
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.graph_entry, viewGroup, false);
         GraphEntity entity = (GraphEntity) getChild(i, i1);
         TextView text = (TextView) view.findViewById(R.id.entry_text);
-        text.setText(entity.description);
-        if(entity.bitmap != null) {
-            ImageView img = (ImageView) view.findViewById(R.id.entry_image);
+        ImageView img = (ImageView) view.findViewById(R.id.entry_image);
+        boolean empty_desc = (entity.description.equals("") || entity.description == null);
+        boolean empty_bitmap = (entity.bitmap == null);
+        if(empty_bitmap && empty_desc) {
+            text.setVisibility(View.GONE);
+            img.setVisibility(View.GONE);
+        } else if(empty_bitmap) {
+            img.setVisibility(View.GONE);
+            text.setText(entity.description);
+        } else if(empty_desc) {
+            text.setVisibility(View.GONE);
+            img.setImageBitmap(entity.bitmap);
+        } else {
+            text.setText(entity.description);
             img.setImageBitmap(entity.bitmap);
         }
+
         relationAdapter = new GraphEntryListAdapter(viewGroup.getContext(), entity.relations, this);
         ListView graphEntry = view.findViewById(R.id.graph_entry);
         graphEntry.setAdapter(relationAdapter);
         Utility.setListViewHeightBasedOnChildren(graphEntry);
+
+        propertiesAdapter = new GraphPropertiesAdapter(viewGroup.getContext(), entity.properities, this);
+        ListView graphProperties = view.findViewById(R.id.graph_properties);
+        graphProperties.setAdapter(propertiesAdapter);
+        Utility.setListViewHeightBasedOnChildren(graphProperties);
+
         return view;
     }
 

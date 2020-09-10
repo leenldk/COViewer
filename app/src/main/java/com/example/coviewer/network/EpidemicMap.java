@@ -36,7 +36,6 @@ public class EpidemicMap {
         for(Map.Entry<String, Integer> entry : list) {
             district.add(entry.getKey());
             number.add(entry.getValue());
-            Log.d(TAG, "dosort: " + entry.getKey() + entry.getValue());
         }
     }
 }
