@@ -39,7 +39,6 @@ public class GraphListAdapter extends BaseExpandableListAdapter {
         group_list = graphGetter.entity_list;
         graphGetter.getImages();
     }
-
     @Override
     public int getGroupCount() {
         return group_list.size();
