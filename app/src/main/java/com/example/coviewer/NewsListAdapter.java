@@ -42,6 +42,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsLi
     public void onBindViewHolder(NewsListViewHolder holder, final int position) {
         ((TextView)holder.layout.findViewById(R.id.news_title)).setText(newslist.get(position).title);
         ((TextView)holder.layout.findViewById(R.id.news_source)).setText(newslist.get(position).date);
+        ((TextView)holder.layout.findViewById(R.id.news_time)).setText(newslist.get(position).source);
         final News news = newslist.get(position);
         if(news_main_fragment.praser.viewed(news)) {
             System.out.println(news.title);

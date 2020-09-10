@@ -27,11 +27,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="6dp"
         android:text="TextView"
         android:textColor="#A1A1A1"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/news_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="4dp"
+        android:text="TextView"
+        android:textColor="#A1A1A1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/news_source"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
