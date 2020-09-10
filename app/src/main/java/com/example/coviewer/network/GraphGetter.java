@@ -37,7 +37,7 @@ public class GraphGetter {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         responseData = response.body().string();
-                        Log.d(TAG, "onResponse: " + responseData.substring(0, 100));
+//                        Log.d(TAG, "onResponse: " + responseData.substring(0, 100));
                         Message message = new Message();
                         message.what = NETCALL_COMPLETE;
                         callback_handler.sendMessage(message);
@@ -89,7 +89,7 @@ public class GraphGetter {
 
     public void praseResponse() {
         Log.d(TAG, "praseResponse: parsing");
-        Log.d(TAG, "praseResponse: " + responseData.substring(0, 100));
+        //Log.d(TAG, "praseResponse: " + responseData.substring(0, 100));
         JSONArray data_array = (JSONArray)JSON.parseObject(responseData).get("data");
         entity_list = new ArrayList<>();
         for(Object entry : data_array) {

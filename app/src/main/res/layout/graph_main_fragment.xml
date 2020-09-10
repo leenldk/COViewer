@@ -9,13 +9,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorNewsUpDownBackground">
 
         <ExpandableListView
             android:id="@+id/expandable_graph_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="4dp"
+            android:background="@drawable/bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/graph_search_edittext"
             tools:layout_editor_absoluteX="0dp"></ExpandableListView>
