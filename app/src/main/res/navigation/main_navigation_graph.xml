@@ -35,10 +35,22 @@
         tools:layout="@layout/graph_main_fragment" >
     </fragment>
     <fragment
+        android:id="@+id/event_cluster_fragment"
+        android:name="com.example.coviewer.event_cluster_fragment"
+        android:label="fragment_event_cluster_fragment"
+        tools:layout="@layout/event_cluster_fragment" >
+        <action
+            android:id="@+id/action_event_cluster_fragment_to_event_main_fragment"
+            app:destination="@id/event_main_fragment" />
+    </fragment>
+    <fragment
         android:id="@+id/event_main_fragment"
         android:name="com.example.coviewer.event_main_fragment"
-        android:label="fragment_event_main_fragment"
+        android:label="event_main_fragment"
         tools:layout="@layout/event_main_fragment" >
+        <argument
+            android:name="event"
+            app:argType="com.example.coviewer.network.Event" />
     </fragment>
     <fragment
         android:id="@+id/expert_main_fragment"
