@@ -99,7 +99,7 @@ public class data_main_fragment extends Fragment {
     public boolean case_global;
     public boolean[] case_type;
     ExpandableListView listView;
-
+    private View root_view;
     DataChartListAdapter adapter;
     public Resources resources;
 
@@ -120,6 +120,7 @@ public class data_main_fragment extends Fragment {
                 if (msg.what == NETCALL_COMPLETE) {
                     Log.d(TAG, "handleMessage: epidemicGetter call complete");
                     epidemicGetter.praseResponse();
+                    root_view.findViewById(R.id.progressBar).setVisibility(View.GONE);
                     updateChart();
                 }
             }
@@ -154,7 +155,7 @@ public class data_main_fragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-
+        root_view = ret_view;
         //*
         /*
         The array contains elements on the list
