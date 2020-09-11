@@ -31,17 +31,19 @@ public class EventListAdapter extends BaseExpandableListAdapter implements View.
     public EventListAdapter(event_main_fragment parent, EventGetter eventGetter) {
         this.parent = parent;
         this.eventGetter = eventGetter;
-        event = new Event();
         label_events = new ArrayList<>();
         relate_events = new ArrayList<>();
         labels = new ArrayList<>();
     }
 
     public void changeEvent(Event event) {
+
         this.event = event;
+
         label_events.clear();
-        relate_events.clear();
+
         labels.clear();
+
         for(String label : event.labels) {
             ArrayList<Event> t_events = eventGetter.getLabelEvents(label, event);
             if(t_events.size() == 0) continue;
@@ -49,11 +51,16 @@ public class EventListAdapter extends BaseExpandableListAdapter implements View.
             labels.add(label);
             Log.d(TAG, "changeEvent: t_events size : " + t_events.size());
         }
-        for(String id : event.related_ids) {
+        /*for(String id : event.related_ids) {
             Event t_event = eventGetter.getEventById(id);
             if(t_event != null)
                 relate_events.add(t_event);
-        }
+        }*/
+        Event t_event = eventGetter.getEventById(event._id);
+        Log.d(TAG, "changeEvent: " + event.title);
+        Log.d(TAG, "changeEvent: related size " + event.related_events.size() );
+        Log.d(TAG, "changeEvent: id " + event._id );
+        relate_events = t_event.related_events;
     }
 
     @Override
@@ -140,11 +147,15 @@ public class EventListAdapter extends BaseExpandableListAdapter implements View.
     @Override
     public void onClick(View view) {
         Log.d(TAG, "onClick: click");
+        //Event t_event1 = eventGetter.getEventById("5ec7ce549fced0a24bf419a1");
+        //Log.d(TAG, "getRelatedEvents: size 5ec7ce549fced0a24bf419a1 " + t_event1.related_events.size());
         if(view.getTag() instanceof Event) {
             Event tag = (Event) view.getTag();
             parent.changeEvent(tag);
-            changeEvent(tag);
-            notifyDataSetChanged();
+            //changeEvent(tag);
+            //notifyDataSetChanged();
         }
+        //t_event1 = eventGetter.getEventById("5ec7ce549fced0a24bf419a1");
+        //Log.d(TAG, "getRelatedEvents: size 5ec7ce549fced0a24bf419a1 " + t_event1.related_events.size());
     }
 }
