@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
 import androidx.navigation.Navigation;
 
 import com.example.coviewer.network.Event;
@@ -25,6 +26,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static com.example.coviewer.MainActivity.content_string;
 
 public class event_main_fragment extends Fragment implements View.OnClickListener {
 
@@ -37,7 +40,8 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private View root_view;
+    private boolean load_finished = false;
     public event_main_fragment() {
         // Required empty public constructor
     }
@@ -98,14 +102,16 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
         listView.setAdapter(adapter);
 
         main_title = ret_view.findViewById(R.id.main_title_text);
-        main_title.setText("loading...");
-
+        root_view = ret_view;
         input_event = (Event) getArguments().getSerializable("event");
 
         btn_next = (Button)ret_view.findViewById(R.id.next_event_button);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!load_finished) {
+                    return ;
+                }
                 if(curr_event == total_events - 1)
                     curr_event = 0;
                 else curr_event++;
@@ -118,6 +124,9 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
         btn_prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!load_finished) {
+                    return ;
+                }
                 if(curr_event == 0)
                     curr_event = total_events - 1;
                 else curr_event--;
@@ -147,8 +156,7 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
         int size = adapter.getGroupCount();
         for(int i = 0; i < size; i++)
             listView.collapseGroup(i);
-
-        main_title.setText(event.title);
+        main_title.setText(content_string(event.title));
 
         Log.d(TAG, "onClick: click");
         t_event1 = eventGetter.getEventById("5ec7ce549fced0a24bf419a1");
@@ -161,6 +169,8 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
     public void onResposeFinished() {
         eventGetter.praseResponse();
         curr_event = eventGetter.id_to_event_number.get(input_event._id);
+        load_finished = true;
+        root_view.findViewById(R.id.progressBar).setVisibility(View.GONE);
         getRelatedEvents();
         total_events = eventGetter.events_list.size();
         changeEvent(input_event);

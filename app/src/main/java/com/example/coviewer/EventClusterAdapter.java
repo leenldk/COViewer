@@ -21,6 +21,8 @@ import com.example.coviewer.network.GraphGetter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.min;
+
 public class EventClusterAdapter extends BaseExpandableListAdapter implements View.OnClickListener {
     private static final String TAG = "EventListAdapter";
     Event event;
@@ -93,7 +95,13 @@ public class EventClusterAdapter extends BaseExpandableListAdapter implements Vi
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_cluster_entry, viewGroup, false);
         t_event = label_list.get(i).get(i1);
         TextView textView = (TextView) view.findViewById(R.id.event_cluster_entry_text);
-        textView.setText(t_event.title);
+        String title = "";
+        if(t_event.title.length() < 20) {
+            title = t_event.title;
+        }else {
+            title = t_event.title.substring(0, 20) + "...";
+        }
+        textView.setText(title);
         view.setTag(t_event);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

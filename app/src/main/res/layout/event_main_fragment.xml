@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -10,34 +10,47 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/previous_event_button"
             android:layout_width="80dp"
             android:layout_height="40dp"
-            android:id="@+id/previous_event_button"
-            android:text="prev"/>
+            android:text="prev" />
+
         <Button
+            android:id="@+id/cluster_page_button"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:id="@+id/cluster_page_button"
-            android:text="back to cluster page"/>
+            android:text="back to cluster page" />
+
         <Button
+            android:id="@+id/next_event_button"
             android:layout_width="80dp"
             android:layout_height="40dp"
-            android:id="@+id/next_event_button"
-            android:text="next"/>
+            android:text="next" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <TextView
-        android:layout_height="wrap_content"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:id = "@+id/main_title_text"
-        />
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+    <TextView
+        android:id="@+id/main_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:lineSpacingMultiplier="1.25"
+        android:textColor="@color/design_default_color_on_secondary" />
 
     <ExpandableListView
-        android:id = "@+id/expandable_event_list"
+        android:id="@+id/expandable_event_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     </ExpandableListView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

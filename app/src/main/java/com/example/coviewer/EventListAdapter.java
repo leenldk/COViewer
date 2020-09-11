@@ -112,10 +112,12 @@ public class EventListAdapter extends BaseExpandableListAdapter implements View.
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_relation_title, viewGroup, false);
             TextView textView = (TextView) view.findViewById(R.id.event_relation_title_text);
             textView.setText("relations : ");
+            textView.setTextColor(0xFF772222);
         } else {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_label_title, viewGroup, false);
             TextView textView = (TextView) view.findViewById(R.id.event_label_title_text);
             textView.setText(labels.get(i - 1));
+            textView.setTextColor(0xFF000000);
         }
         return view;
     }
@@ -127,12 +129,24 @@ public class EventListAdapter extends BaseExpandableListAdapter implements View.
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_title, viewGroup, false);
             TextView textView = (TextView) view.findViewById(R.id.event_title_text);
             t_event = relate_events.get(i1);
-            textView.setText(t_event.title);
+            String title = "";
+            if(t_event.title.length() < 20) {
+                title = t_event.title;
+            }else {
+                title = t_event.title.substring(0, 20) + "...";
+            }
+            textView.setText(title);
         } else {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_title, viewGroup, false);
             TextView textView = (TextView) view.findViewById(R.id.event_title_text);
             t_event = label_events.get(i - 1).get(i1);
-            textView.setText(t_event.title);
+            String title = "";
+            if(t_event.title.length() < 20) {
+                title = t_event.title;
+            }else {
+                title = t_event.title.substring(0, 20) + "...";
+            }
+            textView.setText(title);
         }
         view.setTag(t_event);
         view.setOnClickListener(this);

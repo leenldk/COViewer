@@ -21,6 +21,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import static com.example.coviewer.MainActivity.content_string;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link news_body_fragment#newInstance} factory method to
@@ -75,7 +77,7 @@ public class news_body_fragment extends Fragment {
         View ret_view = inflater.inflate(R.layout.news_body_fragment, container, false);
         final News news = (News)getArguments().getSerializable("news");
         ((TextView)ret_view.findViewById(R.id.news_body_title)).setText(news.title);
-        ((TextView)ret_view.findViewById(R.id.news_body_content)).setText(news.content);
+        ((TextView)ret_view.findViewById(R.id.news_body_content)).setText(content_string(news.content));
         ((TextView)ret_view.findViewById(R.id.news_body_date)).setText(news.date);
         ((TextView)ret_view.findViewById(R.id.news_body_source)).setText(news.source);
         ((Button)ret_view.findViewById(R.id.button_share)).setOnClickListener(new View.OnClickListener() {

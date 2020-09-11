@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id = "@+id/event_label_title">
+
     <TextView
+        android:id="@+id/event_cluster_label_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text = "label"
-        android:id = "@+id/event_cluster_label_text"
-        android:gravity = "center">
-    </TextView>
+        android:gravity="center"
+        android:text="label"
+        android:textColor="@color/design_default_color_on_secondary"></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
