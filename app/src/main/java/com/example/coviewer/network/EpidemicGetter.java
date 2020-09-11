@@ -78,6 +78,24 @@ public class EpidemicGetter {
             world_cured.add(district[0], cured);
             world_dead.add(district[0], dead);
             //Log.d(TAG, "praseResponse: end ");
+
+            for(int i = data_array.size() - 1; i >= 0; i--) {
+                int tim = data_array.size() - i;
+                JSONArray t_array = (JSONArray)data_array.get(i);
+                int t_confirmed = (Integer)t_array.get(0);
+                int t_cured = (Integer)t_array.get(2);
+                int t_dead = (Integer)t_array.get(3);
+                //Log.d(TAG, "praseResponse: confirmed" + confirmed);
+                //Log.d(TAG, "praseResponse: " + entry.getKey());
+                if(district[0].equals("China") && district.length > 1) {
+                    china_confirmed.addTimeline(district[1], t_confirmed, tim);
+                    china_cured.addTimeline(district[1], t_cured, tim);
+                    china_dead.addTimeline(district[1], t_dead, tim);
+                }
+                world_confirmed.addTimeline(district[0], t_confirmed, tim);
+                world_cured.addTimeline(district[0], t_cured, tim);
+                world_dead.addTimeline(district[0], t_dead, tim);
+            }
         }
         Log.d(TAG, "praseResponse: final");
     }
