@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".data_main_fragment">
+    tools:context=".data_main_fragment"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <!--<TextView
@@ -48,23 +49,24 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="新增" />
+                    android:text="确诊" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="治愈" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="死亡" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="确诊" />
             </com.google.android.material.tabs.TabLayout>
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/chart1"
                 android:layout_width="match_parent"
-                android:layout_height="529dp"
+                android:layout_height="537dp"
+                android:scaleType="fitXY"
                 android:background="@android:color/white" />
 
         </LinearLayout>

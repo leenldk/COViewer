@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,6 +57,7 @@ public class graph_main_fragment extends Fragment implements View.OnClickListene
     private GraphListAdapter adapter;
     ExpandableListView listView;
     public static Handler network_handler;
+    LinearLayout search_guide;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,12 +91,14 @@ public class graph_main_fragment extends Fragment implements View.OnClickListene
         Button btn = (Button)ret_view.findViewById(R.id.graph_button);
         btn.setOnClickListener(this);
         root_view = ret_view;
+        search_guide = ret_view.findViewById(R.id.search_guide);
         return ret_view;
     }
 
     @Override
     public void onClick(View view) {
         Log.d(TAG, "onClick: button");
+        search_guide.setVisibility(View.GONE);
         if(((EditText)root_view.findViewById(R.id.graph_search_edittext)).getText().length() == 0) {
             return ;
         }

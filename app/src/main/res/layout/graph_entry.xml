@@ -58,5 +58,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id = "@+id/graph_entry"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id = "@+id/graph_properties"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

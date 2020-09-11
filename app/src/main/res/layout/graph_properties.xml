@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_margin="30dp"
+    android:gravity="center"
+    android:id="@+id/property_entry">
+
+    <TextView
+        android:id="@+id/property_key"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:text="example text"
+        android:textStyle="bold"
+        android:textColor="@color/propertyVal"></TextView>
+
+    <TextView
+        android:id="@+id/property_val"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="left"
+        android:text="example text"
+        android:textColor="@color/propertyVal"></TextView>
+</LinearLayout>

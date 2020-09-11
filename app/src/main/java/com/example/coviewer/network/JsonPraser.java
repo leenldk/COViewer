@@ -44,6 +44,13 @@ public class JsonPraser {
     int current_page = 0;
     Handler main_handler;
 
+    void printHl() {
+        Log.d(TAG, "printHl: " + historylist.size());
+        for(News news : historylist) {
+            Log.d(TAG, "printHl: " + news.title + news._id);
+        }
+    }
+
     public JsonPraser(Activity activity, Handler handler) {
         this.activity = activity;
         Log.d(TAG, "JsonPraser: init");
@@ -62,6 +69,17 @@ public class JsonPraser {
         } catch(IOException e) {
             Log.e(TAG, "JsonPraser: ", e);
         }
+        printHl();
+        /*try {
+        BufferedWriter writer;
+        FileOutputStream out = activity.openFileOutput("history", Context.MODE_PRIVATE);
+        writer = new BufferedWriter(new OutputStreamWriter(out));
+        writer.write("");
+        writer.close();
+        } catch (IOException e) {
+            Log.e(TAG, "loadFromHistoryFile: load error ", e);
+        }*/
+
     }
 
     News loadHistoryNews(String id) {
@@ -107,6 +125,7 @@ public class JsonPraser {
      * 将新闻标为已读
      */
     public void markAsHistory(News news) {
+
         String s = news._id;
         if(historyset.contains(s)) return;
         historyset.add(s);
@@ -114,6 +133,7 @@ public class JsonPraser {
         historylist.add(news);
         saveNewsToHistory(news);
         saveCache();
+        printHl();
     }
 
     /**

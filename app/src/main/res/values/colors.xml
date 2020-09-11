@@ -9,5 +9,9 @@
     <color name="colorListBackground">#fafafa</color>
     <color name="colorNavigationBar">#fffdaf</color>
     <color name="mygray">#aaaaaa</color>
+    <color name="barDeath">#555555</color>
+    <color name="barConfirmed">#f3c242</color>
+    <color name="barCured">#69fe61</color>
+    <color name="propertyVal">#555555</color>
 
 </resources>

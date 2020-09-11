@@ -1,6 +1,8 @@
 package com.example.coviewer;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.os.Bundle;
 
@@ -138,16 +140,16 @@ public class data_main_fragment extends Fragment implements OnChartValueSelected
 
         XAxis xl = chart.getXAxis();
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xl.setDrawAxisLine(true);
+        xl.setDrawAxisLine(false);
         xl.setDrawGridLines(false);
 
         YAxis yl = chart.getAxisLeft();
-        yl.setDrawAxisLine(true);
+        yl.setDrawAxisLine(false);
         yl.setDrawGridLines(true);
         yl.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         YAxis yr = chart.getAxisRight();
-        yr.setDrawAxisLine(true);
+        yr.setDrawAxisLine(false);
         yr.setDrawGridLines(false);
         yr.setAxisMinimum(0f);
 
@@ -226,20 +228,64 @@ public class data_main_fragment extends Fragment implements OnChartValueSelected
         return ret_view;
     }
     private void search() {
+        Log.d(TAG, "### search: changing value");
         System.out.println(case_global);
-        System.out.println(case_type);  //size-3 array, 0:new, 1:death, 2: confirmed
+        System.out.println(case_type);  //size-3 array, 0:confirmed, 1:cured, 2: death
+        EpidemicMap map;
+        if(case_global) {
+            if(case_type[0]) map = epidemicGetter.world_confirmed;
+            else if(case_type[1]) map = epidemicGetter.world_cured;
+            else map = epidemicGetter.world_dead;
+        } else {
+            if(case_type[0]) map = epidemicGetter.china_confirmed;
+            else if(case_type[1]) map = epidemicGetter.china_cured;
+            else map = epidemicGetter.china_dead;
+        }
+        updateChart(map);
     }
     private void updateChart(final EpidemicMap map) {
         Log.d(TAG, "updateChart: begin");
         map.dosort();
         Log.d(TAG, "updateChart: end sort");
-        Log.d(TAG, "updateChart: size " + map.number.size());
-        Log.d(TAG, "updateChart: size " + map.district.size());
+
+        int color;
+        BarDataSet set1;
+        if(case_type[0]) color = R.color.barConfirmed;
+        else if(case_type[1]) color = R.color.barCured;
+        else color = R.color.barDeath;
+        if(map.district.size() > 0)
+            map.district.set(0, "test\ntest111");
+
+
+        /*
+        if(case_global)
+            chart.getViewPortHandler().getMatrixTouch().postScale(1f, 15f);
+        else chart.getViewPortHandler().getMatrixTouch().postScale(1f, 2f);
+        Log.d(TAG, "updateChart: " + chart.getViewPortHandler().getMatrixTouch());
+           */
+        Matrix matrix = new Matrix();
+        if(case_global)
+            matrix.postScale(0.9f, 15f);
+        else
+            matrix.postScale(0.9f, 2f);
+        chart.getViewPortHandler().refresh(matrix, chart, false);
+
+
+        //if(case_global) chart.setScaleY(5);
+        //else chart.setScaleY(1);
+
+        //Log.d(TAG, "### updateChart: color " + R.color.barConfirmed);
+        Log.d(TAG, "### updateChart: color " + color);
+        Log.d(TAG, "### updateChart: type " + case_type[0] + case_type[1] + case_type[2]);
+
         float barWidth = 0.9f;
         float spaceForBar = 1f;
         XAxis xl = chart.getXAxis();
         xl.setLabelCount(map.number.size());
         xl.setGranularity(1);
+
+        Log.d(TAG, "updateChart: " + map.number.size());
+        
         ValueFormatter valueFormatter = new ValueFormatter() {
             private final ArrayList<String> label = map.district;
                     //new String[]{"北京","changchun", "hongkong", "上海", "tibet"};
@@ -259,27 +305,34 @@ public class data_main_fragment extends Fragment implements OnChartValueSelected
             //values.add(new BarEntry(i, i + 10));
             values.add(new BarEntry(i, map.number.get(i)));
         }
-        BarDataSet set1;
 
-        if (chart.getData() != null &&
+        /* if (chart.getData() != null &&
                 chart.getData().getDataSetCount() > 0) {
             set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
+            set1.setColor(color);
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(values, "DataSet 1");
+        } else { */
+
+        set1 = new BarDataSet(values, "DataSet 1");
 
             set1.setDrawIcons(false);
 
+            set1.setColor(getResources().getColor(color));
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
 
             BarData data = new BarData(dataSets);
             data.setValueTextSize(10f);
             data.setBarWidth(barWidth);
+        Log.d(TAG, "### updateChart: size " + data.getEntryCount());
             chart.setData(data);
-        }
+            Log.d(TAG, "### updateChart: set data");
+        Log.d(TAG, "### updateChart: count " + chart.getData().getEntryCount());
+            chart.invalidate();
+            chart.notifyDataSetChanged();
+        //}
     }
 
     private void updateChart() {
