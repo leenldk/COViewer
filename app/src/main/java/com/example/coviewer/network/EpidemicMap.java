@@ -12,16 +12,28 @@ import java.util.Map;
 public class EpidemicMap {
     private static final String TAG = "EpidemicMap";
     public LinkedHashMap<String, Integer> map;
+    public LinkedHashMap<String, ArrayList<Integer> > timeline_map;
     public ArrayList<String> district;
     public ArrayList<Integer> number;
-    EpidemicMap() {
+    public EpidemicMap() {
+        district = new ArrayList<>();
         map = new LinkedHashMap<>();
+        number = new ArrayList<>();
+        timeline_map = new LinkedHashMap<>();
     }
     public void add(String key, int val) {
         //map.merge(key, val, Integer::sum);
         if(map.containsKey(key)) map.put(key, map.get(key) + val);
         else map.put(key, val);
+        timeline_map.put(key, new ArrayList<Integer>());
     }
+
+    public void addTimeline(String key, int val, int tim) {
+        ArrayList<Integer> list = timeline_map.get(key);
+        while(tim >= list.size()) list.add(0);
+        list.set(tim, list.get(tim) + val);
+    }
+
     public void dosort() {
         Log.d(TAG, "dosort: size" + map.size());
         district = new ArrayList<>();
