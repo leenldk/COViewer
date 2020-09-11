@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.example.coviewer.expert_main_fragment.T;
+
 public class ExpertGetter {
     public static final int NETCALL_COMPLETE = 1;
     public static final int IMAGEGET_COMPLETE = 2;
@@ -58,15 +60,15 @@ public class ExpertGetter {
     public void getImages() {
         final AtomicInteger counter = new AtomicInteger(0);
         final int size = experts.size();
-        for(final Expert e : experts) {
-            if(e.avatar == null || e.avatar.equals("")) {
+        for (final Expert e : experts) {
+            if (e.avatar == null || e.avatar.equals("")) {
                 counter.getAndIncrement();
-                if(counter.get() == size) {
+                if (counter.get() == size) {
                     Log.d(TAG, "onResponse: get image end");
                     Message message = new Message();
                     message.what = IMAGEGET_COMPLETE;
-                    for(Expert expert : passedaway_experts) {
-                        if(expert.bitmap != null)
+                    for (Expert expert : passedaway_experts) {
+                        if (expert.bitmap != null)
                             expert.bitmap = Utility.toGrayscale(expert.bitmap);
                     }
                     callback_handler.sendMessage(message);
@@ -80,12 +82,12 @@ public class ExpertGetter {
                             byte[] pic_byte = response.body().bytes();
                             e.bitmap = BitmapFactory.decodeByteArray(pic_byte, 0, pic_byte.length);
                             counter.getAndIncrement();
-                            if(counter.get() == size) {
+                            if (counter.get() == size) {
                                 Log.d(TAG, "onResponse: get image end");
                                 Message message = new Message();
                                 message.what = IMAGEGET_COMPLETE;
-                                for(Expert expert : passedaway_experts) {
-                                    if(expert.bitmap != null)
+                                for (Expert expert : passedaway_experts) {
+                                    if (expert.bitmap != null)
                                         expert.bitmap = Utility.toGrayscale(expert.bitmap);
                                 }
                                 callback_handler.sendMessage(message);
@@ -98,6 +100,42 @@ public class ExpertGetter {
                         }
                     });
         }
+    }
+    public void getImageOf(final int position, final int myT) {
+        if(experts.get(position).avatar == null || experts.get(position).avatar.equals("")) {
+            Log.d(TAG, "onResponse: get image end");
+            Message message = new Message();
+            message.what = IMAGEGET_COMPLETE;
+            if(experts.get(position).is_passedaway){
+                if(experts.get(position).bitmap != null)
+                    experts.get(position).bitmap = Utility.toGrayscale(experts.get(position).bitmap);
+            }
+            callback_handler.sendMessage(message);
+        }
+        HttpUtil.sendHttpRequest(experts.get(position).avatar,
+            new okhttp3.Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    byte[] pic_byte = response.body().bytes();
+                    if(T == myT) {
+                        experts.get(position).bitmap = BitmapFactory.decodeByteArray(pic_byte, 0, pic_byte.length);
+                        Log.d(TAG, "onResponse: get image end");
+                        Message message = new Message();
+                        message.what = IMAGEGET_COMPLETE;
+                        if(experts.get(position).is_passedaway){
+                            if(experts.get(position).bitmap != null) {
+                                experts.get(position).bitmap = Utility.toGrayscale(experts.get(position).bitmap);
+                            }
+                        }
+                        callback_handler.sendMessage(message);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "onFailure: " + e.getMessage());
+                }
+            });
     }
 
     public void praseResponse() {
@@ -121,6 +159,7 @@ public class ExpertGetter {
             JSONObject profile = (JSONObject)obj.get("profile");
             expert.bio = (String)profile.get("bio");
             expert.position = (String)profile.get("position");
+            expert.affiliation = (String)profile.get("affiliation");
             Log.d(TAG, "praseResponse: name " + expert.name);
             Log.d(TAG, "praseResponse: is_passedaway " + expert.is_passedaway);
             Log.d(TAG, "praseResponse: bio " + expert.bio);

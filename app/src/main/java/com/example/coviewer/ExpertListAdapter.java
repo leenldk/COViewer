@@ -74,7 +74,9 @@ public class ExpertListAdapter extends ArrayAdapter<Expert> {
         view = LayoutInflater.from(getContext()).inflate(R.layout.expert_entry, null);
         TextView textView = (TextView) view.findViewById(R.id.expert_entry_text);
         textView.setText(expert.name);
-        view.setOnClickListener(new View.OnClickListener() {
+        ((TextView) view.findViewById(R.id.expert_pos)).setText(expert.position);
+        ((TextView) view.findViewById(R.id.expert_aff)).setText(expert.affiliation);
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
@@ -85,6 +87,14 @@ public class ExpertListAdapter extends ArrayAdapter<Expert> {
         if(expert.bitmap != null) {
             ImageView img = (ImageView) view.findViewById(R.id.expert_entry_image);
             img.setImageBitmap(expert.bitmap);
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("expert", expert);
+                    Navigation.findNavController(view).navigate(R.id.action_view_expert_body, bundle);
+                }
+            });
         }
         return view;
     }

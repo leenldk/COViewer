@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.coviewer.network.ExpertGetter;
+import com.google.android.material.tabs.TabLayout;
 
 public class expert_main_fragment extends Fragment {
 
@@ -25,6 +26,10 @@ public class expert_main_fragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private TabLayout expert_tablayout;
+    static public int T = 0;
+    private int pos1;
+    private int pos2;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -54,7 +59,7 @@ public class expert_main_fragment extends Fragment {
 
     public static final int NETCALL_COMPLETE = 1;
     public static final int IMAGEGET_COMPLETE = 2;
-
+    private boolean mode = true;
     private ExpertListAdapter adapter;
     ListView listView;
     public static Handler network_handler;
@@ -63,28 +68,43 @@ public class expert_main_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         network_handler = new Handler(Looper.myLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == NETCALL_COMPLETE) {
                     Log.d(TAG, "handleMessage: graph call complete");
                     onGetExpertFinished();
+                    //expertGetter.getImageOf(pos1, T);
                 } else if(msg.what == IMAGEGET_COMPLETE) {
                     Log.d(TAG, "handleMessage: image get complete");
-                    onGetImageFinished();
+                    if(mode) {
+                        adapter.notifyDataSetChanged();
+                        pos1++;
+                        if(pos1 < adapter.experts.size()) {
+                            expertGetter.getImageOf(pos1, T);
+                        }
+                    }else {
+                        adapter.notifyDataSetChanged();
+                        pos2++;
+                        if(pos2 < adapter.experts.size()) {
+                            expertGetter.getImageOf(pos2, T);
+                        }
+                    }
                 }
             }
         };
         expertGetter = new ExpertGetter(network_handler);
         adapter = new ExpertListAdapter(getContext(), expertGetter, this, true);
-        expertGetter.getExperts();
+
     }
 
     void onGetExpertFinished() {
         Log.d(TAG, "onGetExpertFinished: ");
         expertGetter.praseResponse();
-        expertGetter.getImages();
+        adapter.changeMode(true);
+        adapter.notifyDataSetChanged();
+        expertGetter.getImageOf(pos1, T);
+        //expertGetter.getImages();
     }
 
     void onGetImageFinished() {
@@ -99,7 +119,41 @@ public class expert_main_fragment extends Fragment {
         View ret_view = inflater.inflate(R.layout.expert_main_fragment, container, false);
         listView = ret_view.findViewById(R.id.expert_list);
         listView.setAdapter(adapter);
+        expert_tablayout = ret_view.findViewById(R.id.expert_tablayout);
+        pos1 = pos2 = 0;
 
+
+        expertGetter.getExperts();
+        expert_tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 0) {
+                    adapter.changeMode(true);
+                    mode = true;
+                    adapter.notifyDataSetChanged();
+                    T++;
+                    if(pos1 < adapter.experts.size()) {
+                        expertGetter.getImageOf(pos1, T);
+                    }
+                }else {
+                    adapter.changeMode(false);
+                    mode = false;
+                    adapter.notifyDataSetChanged();
+                    T++;
+                    if(pos2 < adapter.experts.size()) {
+                        expertGetter.getImageOf(pos2, T);
+                    }
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         return ret_view;
     }
 }

@@ -45,8 +45,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsLi
         ((TextView)holder.layout.findViewById(R.id.news_time)).setText(newslist.get(position).source);
         final News news = newslist.get(position);
         if(news_main_fragment.praser.viewed(news)) {
-            System.out.println(news.title);
             ((TextView)holder.layout.findViewById(R.id.news_title)).setTextColor(0xffaaaaaa);
+        }else {
+            ((TextView)holder.layout.findViewById(R.id.news_title)).setTextColor(0xff000000);
         }
         ((TextView)holder.layout.findViewById(R.id.news_title)).setOnClickListener(new View.OnClickListener() {
             @Override

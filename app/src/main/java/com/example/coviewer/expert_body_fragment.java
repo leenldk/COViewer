@@ -75,6 +75,8 @@ public class expert_body_fragment extends Fragment {
         ((ImageView)ret_view.findViewById(R.id.expert_body_image)).setImageBitmap(expert.bitmap);
         ((TextView)ret_view.findViewById(R.id.expert_body_name)).setText(expert.name);
         ((TextView)ret_view.findViewById(R.id.expert_body_bio)).setText(expert.bio);
+        ((TextView)ret_view.findViewById(R.id.expert_pos)).setText(expert.position);
+        ((TextView)ret_view.findViewById(R.id.expert_aff)).setText(expert.affiliation);
         Log.d(TAG, "onCreateView: " + expert.bio);
         return ret_view;
     }
