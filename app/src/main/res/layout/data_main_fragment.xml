@@ -62,6 +62,13 @@
                 android:text="死亡" />
         </com.google.android.material.tabs.TabLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
         <ExpandableListView
             android:id="@+id/expandable_data_list"
             android:layout_width="match_parent"
