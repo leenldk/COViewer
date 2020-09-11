@@ -71,6 +71,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="12dp"
+                android:lineSpacingMultiplier="1.25"
                 android:text="TextView"
                 android:textColor="@color/design_default_color_on_secondary"
                 app:layout_constraintEnd_toEndOf="parent"

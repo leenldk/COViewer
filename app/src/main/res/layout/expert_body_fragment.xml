@@ -23,6 +23,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
+                android:lineSpacingMultiplier="1.25"
                 android:text="bio text"
                 android:textColor="@color/design_default_color_on_secondary"
                 app:layout_constraintEnd_toEndOf="parent"
