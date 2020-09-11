@@ -172,7 +172,7 @@ public class DataChartListAdapter extends BaseExpandableListAdapter implements O
         yr.setDrawGridLines(false);
         yr.setAxisMinimum(0f);
 
-        chart.animateY(1500);
+        chart.animateY(500);
 
 
         Legend l = chart.getLegend();

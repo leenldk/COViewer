@@ -136,6 +136,16 @@ public class data_main_fragment extends Fragment {
         View ret_view = inflater.inflate(R.layout.data_main_fragment, container, false);
         listView = ret_view.findViewById(R.id.expandable_data_list);
         listView.setAdapter(adapter);
+        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition == 0) return;
+                int count=listView.getExpandableListAdapter().getGroupCount();
+                for(int i=1;i<count; i++){
+                    if(groupPosition != i){
+                        listView.collapseGroup(i);
+                    }
+            }}});
 
         Log.d(TAG, "onCreateView: in getEpidemic");
         epidemicGetter.getEpidemic();

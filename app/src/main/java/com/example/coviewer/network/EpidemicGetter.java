@@ -69,14 +69,16 @@ public class EpidemicGetter {
             //Log.d(TAG, "praseResponse: confirmed" + confirmed);
             //Log.d(TAG, "praseResponse: " + entry.getKey());
             String[] district = entry.getKey().split("\\|");
-            if(district[0].equals("China") && district.length > 1) {
+            if(district[0].equals("China") && district.length == 2) {
                 china_confirmed.add(district[1], confirmed);
                 china_cured.add(district[1], cured);
                 china_dead.add(district[1], dead);
             }
-            world_confirmed.add(district[0], confirmed);
-            world_cured.add(district[0], cured);
-            world_dead.add(district[0], dead);
+            if(district.length == 1) {
+                world_confirmed.add(district[0], confirmed);
+                world_cured.add(district[0], cured);
+                world_dead.add(district[0], dead);
+            }
             //Log.d(TAG, "praseResponse: end ");
 
             for(int i = data_array.size() - 1; i >= 0; i--) {
@@ -87,14 +89,16 @@ public class EpidemicGetter {
                 int t_dead = (Integer)t_array.get(3);
                 //Log.d(TAG, "praseResponse: confirmed" + confirmed);
                 //Log.d(TAG, "praseResponse: " + entry.getKey());
-                if(district[0].equals("China") && district.length > 1) {
+                if(district[0].equals("China") && district.length == 2) {
                     china_confirmed.addTimeline(district[1], t_confirmed, tim);
                     china_cured.addTimeline(district[1], t_cured, tim);
                     china_dead.addTimeline(district[1], t_dead, tim);
                 }
-                world_confirmed.addTimeline(district[0], t_confirmed, tim);
-                world_cured.addTimeline(district[0], t_cured, tim);
-                world_dead.addTimeline(district[0], t_dead, tim);
+                if(district.length == 1) {
+                    world_confirmed.addTimeline(district[0], t_confirmed, tim);
+                    world_cured.addTimeline(district[0], t_cured, tim);
+                    world_dead.addTimeline(district[0], t_dead, tim);
+                }
             }
         }
         Log.d(TAG, "praseResponse: final");
