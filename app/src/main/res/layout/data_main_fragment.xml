@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".data_main_fragment"
-    >
+    android:background="@drawable/bg"
+    tools:context=".data_main_fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <!--<TextView
@@ -17,57 +17,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"> -->
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_global"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:tabBackground="@color/colorNewsUpDownBackground">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_global"
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:tabBackground="@color/colorNewsUpDownBackground">
+                android:text="中国" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="中国" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="全球" />
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_three"
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:tabBackground="@color/colorNewsUpDownBackground">
+                android:text="全球" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="确诊" />
+        </com.google.android.material.tabs.TabLayout>
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="治愈" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/colorNewsUpDownBackground">
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="死亡" />
-            </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确诊" />
 
-            <ExpandableListView
-                android:id="@+id/expandable_data_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></ExpandableListView>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="治愈" />
 
-        </LinearLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="死亡" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <ExpandableListView
+            android:id="@+id/expandable_data_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ExpandableListView>
+
+    </LinearLayout>
     <!--</ScrollView> -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/data_list_drawer"
