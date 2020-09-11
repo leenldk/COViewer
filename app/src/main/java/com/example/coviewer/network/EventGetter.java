@@ -9,7 +9,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -28,12 +31,14 @@ public class EventGetter {
     public ArrayList<Event> events_list;
     public LinkedHashMap<String, ArrayList<Event> > label_events;
     public LinkedHashMap<String, Event> id_to_event;
+    public LinkedHashMap<String, Integer> id_to_event_number;
 
     public EventGetter(Handler handler) {
         callback_handler = handler;
         label_events = new LinkedHashMap<>();
         id_to_event = new LinkedHashMap<>();
         events_list = new ArrayList<>();
+        id_to_event_number = new LinkedHashMap<>();
     }
 
     public void getEvents() {
@@ -106,6 +111,7 @@ public class EventGetter {
                 label_events.get(label).add(event);
             }
             id_to_event.put(event._id, event);
+            id_to_event_number.put(event._id, events_list.size());
             events_list.add(event);
         }
     }

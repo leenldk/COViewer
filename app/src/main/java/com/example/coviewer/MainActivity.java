@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.main_drawer_item_four:
                 Log.d(TAG, "main_drawer_button_click: event");
-                Navigation.findNavController(findViewById((R.id.main_fragment_host))).navigate(R.id.event_main_fragment);
+                Navigation.findNavController(findViewById((R.id.main_fragment_host))).navigate(R.id.event_cluster_fragment);
                 ((DrawerLayout) findViewById(R.id.main_drawerlayout)).closeDrawers();
                 return true;
             case R.id.main_drawer_item_five:

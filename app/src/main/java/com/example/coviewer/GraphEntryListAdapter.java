@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,14 @@ public class GraphEntryListAdapter extends ArrayAdapter<EntityRelation> implemen
         TextView textView = (TextView) view.findViewById(R.id.relation_label);
         textView.setText(entity.label);
         textView.setOnClickListener(this);
+        ImageView imageView = (ImageView) view.findViewById(R.id.relation_image);
+
+        TextView relation_string = (TextView) view.findViewById(R.id.relation_string);
+        relation_string.setText(entity.relation);
+
+        if(entity.forward)
+            imageView.setImageResource(R.drawable.right_arrow);
+        else imageView.setImageResource(R.drawable.left_arrow);
         return view;
     }
 

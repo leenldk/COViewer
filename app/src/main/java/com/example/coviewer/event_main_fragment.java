@@ -15,9 +15,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.coviewer.network.Event;
 import com.example.coviewer.network.EventGetter;
+import com.example.coviewer.network.Expert;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class event_main_fragment extends Fragment implements View.OnClickListener {
 
@@ -62,6 +69,9 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
     public static Handler network_handler;
     EventGetter eventGetter;
     public int curr_event;
+    public int total_events;
+    Event input_event;
+    Button btn_next, btn_prev, btn_cluster;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,18 +100,59 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
         main_title = ret_view.findViewById(R.id.main_title_text);
         main_title.setText("loading...");
 
-        Button btn = (Button)ret_view.findViewById(R.id.next_event_button);
-        btn.setOnClickListener(this);
+        input_event = (Event) getArguments().getSerializable("event");
+
+        btn_next = (Button)ret_view.findViewById(R.id.next_event_button);
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(curr_event == total_events - 1)
+                    curr_event = 0;
+                else curr_event++;
+                Event t_event = eventGetter.events_list.get(curr_event);
+                changeEvent(t_event);
+            }
+        });
+
+        btn_prev = (Button)ret_view.findViewById(R.id.previous_event_button);
+        btn_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(curr_event == 0)
+                    curr_event = total_events - 1;
+                else curr_event--;
+                Event t_event = eventGetter.events_list.get(curr_event);
+                changeEvent(t_event);
+            }
+        });
+
+        btn_cluster = (Button)ret_view.findViewById(R.id.cluster_page_button);
+        btn_cluster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                Navigation.findNavController(view).navigate(R.id.event_cluster_fragment, bundle);
+            }
+        });
+
         eventGetter.getEvents();
         return ret_view;
     }
 
     public void changeEvent(Event event) {
+        Log.d(TAG, "onClick: click");
+        Event t_event1 = eventGetter.getEventById("5ec7ce549fced0a24bf419a1");
+        Log.d(TAG, "getRelatedEvents before change: size 5ec7ce549fced0a24bf419a1 " + t_event1.related_events.size());
+        Log.d(TAG, "changeEvent: changing");
         int size = adapter.getGroupCount();
         for(int i = 0; i < size; i++)
             listView.collapseGroup(i);
 
         main_title.setText(event.title);
+
+        Log.d(TAG, "onClick: click");
+        t_event1 = eventGetter.getEventById("5ec7ce549fced0a24bf419a1");
+        Log.d(TAG, "getRelatedEvents after change: size 5ec7ce549fced0a24bf419a1 " + t_event1.related_events.size());
 
         adapter.changeEvent(event);
         adapter.notifyDataSetChanged();
@@ -109,8 +160,32 @@ public class event_main_fragment extends Fragment implements View.OnClickListene
 
     public void onResposeFinished() {
         eventGetter.praseResponse();
-        curr_event = 0;
-        changeEvent(eventGetter.events_list.get(0));
+        curr_event = eventGetter.id_to_event_number.get(input_event._id);
+        getRelatedEvents();
+        total_events = eventGetter.events_list.size();
+        changeEvent(input_event);
+    }
+
+    public void getRelatedEvents() {
+        ArrayList<Event> events_list = eventGetter.events_list;
+        int size = events_list.size();
+        Log.d(TAG, "getRelatedEvents: size " + size);
+        BufferedReader reader = null;
+        try {
+            InputStreamReader inputReader = new InputStreamReader( getResources().openRawResource(R.raw.related_events));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            Scanner scanner = new Scanner(bufReader);
+
+            for(Event event : events_list) {
+                for(int i = 0; i < 10; i++) {
+                    int t = scanner.nextInt();
+                    Event t_event = events_list.get(t);
+                    event.related_events.add(t_event);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

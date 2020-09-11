@@ -14,7 +14,11 @@
             android:layout_height="40dp"
             android:id="@+id/previous_event_button"
             android:text="prev"/>
-
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:id="@+id/cluster_page_button"
+            android:text="back to cluster page"/>
         <Button
             android:layout_width="80dp"
             android:layout_height="40dp"

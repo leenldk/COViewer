@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.util.Pair;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -11,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.Call;
@@ -108,6 +110,15 @@ public class GraphGetter {
                 entity.relations.add(t_relation);
                 Log.d(TAG, "praseResponse: relation label " + t_relation.label);
             }
+            JSONObject properties = (JSONObject) ((JSONObject)abstractInfo.get("COVID")).get("properties");
+            Log.d(TAG, "### praseResponse: COVID " + ((JSONObject)abstractInfo.get("COVID")).toString());
+            Log.d(TAG, "### praseResponse: property " + properties.toString());
+            Log.d(TAG, "### praseResponse: property " + properties.entrySet().size());
+            for (Map.Entry<String, Object> t_entry : properties.entrySet()) {
+                entity.properities.add(new Pair<String, String>(t_entry.getKey(), (String)t_entry.getValue()));
+                Log.d(TAG, "praseResponse: property " + t_entry.getKey() + (String)t_entry.getValue());
+            }
+
             entity_list.add(entity);
         }
     }
