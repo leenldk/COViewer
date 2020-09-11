@@ -68,7 +68,7 @@ public class event_cluster_fragment extends Fragment {
     EventGetter eventGetter;
     ArrayList<String> labels;
     ArrayList<ArrayList<Event> > label_list;
-
+    private View root_view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +94,7 @@ public class event_cluster_fragment extends Fragment {
         View ret_view = inflater.inflate(R.layout.event_cluster_fragment, container, false);
         listView = ret_view.findViewById(R.id.expandable_event_cluster_list);
         listView.setAdapter(adapter);
-
+        root_view = ret_view;
         eventGetter.getEvents();
         return ret_view;
     }
@@ -124,6 +124,7 @@ public class event_cluster_fragment extends Fragment {
         eventGetter.praseResponse();
         getCluster();
         Log.d(TAG, "onResposeFinished: ");
+        root_view.findViewById(R.id.progressBar).setVisibility(View.GONE);
         adapter.onResposeFinished();
     }
 }

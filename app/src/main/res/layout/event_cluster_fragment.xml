@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ExpandableListView
-        android:id = "@+id/expandable_event_cluster_list"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+    <ExpandableListView
+        android:id="@+id/expandable_event_cluster_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
+
     </ExpandableListView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -84,4 +84,10 @@ public class MainActivity extends AppCompatActivity {
         //Log.d(TAG, "onDestroy: saving to history");
         //praser.saveCache();
     }
+    static public String content_string(String content) {
+        String new_content = content.replace("<br>", "\n");
+        new_content = new_content.replace("\n", "\n        ");
+        new_content = "        " + new_content;
+        return new_content;
+    }
 }

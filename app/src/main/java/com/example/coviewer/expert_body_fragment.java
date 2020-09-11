@@ -16,6 +16,8 @@ import com.example.coviewer.network.News;
 
 import org.w3c.dom.Text;
 
+import static com.example.coviewer.MainActivity.content_string;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link news_body_fragment#newInstance} factory method to
@@ -74,7 +76,7 @@ public class expert_body_fragment extends Fragment {
         if(expert == null) Log.d(TAG, "onCreateView: null expert");
         ((ImageView)ret_view.findViewById(R.id.expert_body_image)).setImageBitmap(expert.bitmap);
         ((TextView)ret_view.findViewById(R.id.expert_body_name)).setText(expert.name);
-        ((TextView)ret_view.findViewById(R.id.expert_body_bio)).setText(expert.bio);
+        ((TextView)ret_view.findViewById(R.id.expert_body_bio)).setText(content_string(expert.bio));
         ((TextView)ret_view.findViewById(R.id.expert_pos)).setText(expert.position);
         ((TextView)ret_view.findViewById(R.id.expert_aff)).setText(expert.affiliation);
         Log.d(TAG, "onCreateView: " + expert.bio);
